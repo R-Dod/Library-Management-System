@@ -11,7 +11,7 @@ export default function Home() {
       <section className={utilStyles.headingMd}>
         <p>[Your Self Introduction]</p>
         <p>
-          (This is a Library management system</a>.)
+          This is an LMS
         </p>
       </section>
     </Layout>
