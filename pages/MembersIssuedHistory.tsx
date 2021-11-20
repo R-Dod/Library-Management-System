@@ -58,6 +58,11 @@ const FilterMultiValDataComponent = (props: any) => {
       
     ];
 
+
+    useEffect (()=>{
+      // get db data here
+    });
+
     // block comment CTRL + K + C
     // block un-comment CTRL + K + U
 
