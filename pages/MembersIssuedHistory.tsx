@@ -5,6 +5,7 @@ import MaterialDataTable from '../shared-components/data-table';
 
 const FilterMultiValDataComponent = (props: any) => {
 
+    // receive database table here
     const IssueHistoryData: any = [
         {
             id: 1,
@@ -57,6 +58,13 @@ const FilterMultiValDataComponent = (props: any) => {
       
     ];
 
+    // block comment CTRL + K + C
+    // block un-comment CTRL + K + U
+
+    // const dbData = 'db';
+    // let newdata = dbData;
+    // newdata = 'blah'
+
     const [issueHistory, setIssueHistory] = useState<any>(IssueHistoryData);
 
   return (
@@ -101,7 +109,7 @@ const FilterMultiValDataComponent = (props: any) => {
 
                         const dataDelete = [...issueHistory];
                         const index = oldData.tableData.id;
-                        dataDelete.splice(index, 1);
+                        dataDelete.splice(index, 1); 
                         setIssueHistory([...dataDelete]);
 
                       resolve();
