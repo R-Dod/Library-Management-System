@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 function BookList({ books }) {
     return (
         <>
@@ -5,9 +7,12 @@ function BookList({ books }) {
         {books.map( book => {
             return (
                 <div key={book.id}>
+                    <Link href = {`books/${book.id}`}>
                     <h2>
                         {book.id} {book.title} {book.isbn}
                     </h2>
+                    </Link>
+                    <hr />
                 </div>
             )
         })}
