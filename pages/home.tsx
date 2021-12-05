@@ -5,13 +5,16 @@ import { Box, Grid } from '@material-ui/core';
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
+import axios from 'axios';
+import Image from 'next/image'
 
-//function Media(props) {
+
+const url = 'http://localhost:4000';
 
 const Home: NextPage<any, any> = function () {
-  //const Home = (props: any) => {
+  const [allBooks, setAllBooks] = useState<any>([]);
 
   // fetch data from db
   const data = [
@@ -47,21 +50,34 @@ const Home: NextPage<any, any> = function () {
     },
   ];
 
+  useEffect(() => {
+
+    axios.request({
+      url: url + '/book/getAll',
+      method: 'GET',
+    }).then((response) => {
+      console.log(response.data);
+      setAllBooks(response.data);
+    });
+  }, []);
+
   return (
     <React.Fragment>
       <Box sx={{ overflow: 'hidden' }}>
         <Grid container wrap="nowrap">
 
-          {data.map((item: any, index: number) => {
+          {allBooks?.map((item: any, index: number) => {
             return (
 
-              <Link href={`/book/${item.id}`} key={item.id}>
-                <Box key={index} sx={{ width: 210, marginRight: 0.5, my: 5}}>
+              <Link href={`/book/${item.BOOK_ID}`} key={item.BOOK_ID}>
+                <Box key={index} sx={{ width: 210, marginRight: 0.5, my: 5 }}>
                   {item ? (
-                    <img
-                      style={{ width: 210, height: 118 }}
-                      alt={item.bookName}
-                      src={item.src}
+                    <Image
+                      priority
+                      src={`/images/${item.BOOK_ID}.jpg`}
+                      height={144}
+                      width={144}
+                      alt={`${item.TITLE}`}
                     />
                   ) : (
                     <Skeleton variant="rectangular" width={210} height={118} />
@@ -71,14 +87,14 @@ const Home: NextPage<any, any> = function () {
 
                     <Box sx={{ pr: 2 }}>
                       <Typography gutterBottom variant="body2">
-                        {item.bookName}
+                        {item.TITLE}
                       </Typography>
-                      <Typography display="block" variant="caption" color="text.secondary">
-                        {item.channel}
+                      {/* <Typography display="block" variant="caption" color="text.secondary">
+                        {item.first_name}
                       </Typography>
                       <Typography variant="caption" color="text.secondary">
-                        {`${item.views} • ${item.createdAt}`}
-                      </Typography>
+                        {`${item.category_name} • ${item.createdAt}`}
+                      </Typography> */}
                     </Box>
 
                   ) : (

@@ -11,22 +11,37 @@ const FilterMultiValDataComponent = (props: any) => {
             id: 1,
             BookID: 'B1',
             BookName: 'Book 1',
+            CopyId: 3,
+            IssueId: 12,
             IssueDate: '20/11/2021',
             IssuedTo: 'Maheen',
-            Returned: true
+            Duedate:'29/11/2021',
+            Amountfine:100, // this would be the fine if he got late
+            Returned: true,
+            ReturnDate: '28/11/2021' , //havent returned yet
+            FineDate: null, // no fine applicable yet
+            LateFine: 0 //accumulated fine
         },
         {
             id: 2,
             BookID: 'B2',
             BookName: 'Book 2',
+            CopyId: 4,
+            IssueId: 13,
             IssueDate: '13/12/2020',
             IssuedTo: 'Noor',
-            Returned: false
+            Duedate:'29/11/2021',
+            Amountfine:100, 
+            Returned: false,
+            ReturnDate: null,
+            FineDate: null, 
+            LateFine: 0 
         }
     ];
     
     const columnDefs: any[] = [
         { title: 'ID', field: 'id' },
+        { title: 'Book ID', field: 'BookID' },
         {
         title: 'Book Name',
         field: 'BookName',
@@ -37,8 +52,13 @@ const FilterMultiValDataComponent = (props: any) => {
             textOverflow: 'ellipsis',
         },
         },
+        { title: 'Copy ID', field: 'CopyId' , editable: 'never'},
+        { title: 'Issue ID', field: 'IssueId' , editable: 'never'},
         { title: 'Issue Date', field: 'IssueDate' , editable: 'never'},
         { title: 'Issued To', field: 'IssuedTo' },
+        { title: 'Due Date', field: 'Duedate' },
+        { title: 'Amount Fine', field: 'AmountFine' },
+
         {
             title: 'Return Status',
             field: 'Returned',
@@ -55,6 +75,9 @@ const FilterMultiValDataComponent = (props: any) => {
               );
             },
           },
+          { title: 'Returned on date', field: 'ReturnDate' },
+          { title: 'Date of Fine payment', field: 'FineDate' },
+          { title: 'Accumulated Fine', field: 'LateFine' },
       
     ];
 
@@ -79,7 +102,7 @@ const FilterMultiValDataComponent = (props: any) => {
               options={{
                 exportButton: true,
                 draggable: false,
-                actionsColumnIndex: -1,
+                actionsColumnIndex: 1,
                 padding: 'dense',
                 search: true,
               }}

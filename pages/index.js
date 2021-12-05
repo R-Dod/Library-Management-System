@@ -9,11 +9,14 @@ export default function Home() {
         <title>{siteTitle}</title>
       </Head>
       <section className={utilStyles.headingMd}>
-        <p>[Your Self Introduction]</p>
+        <p>Library Management System</p>
         <p>
-          This is an LMS
+          "Browse for your favorite books!"
         </p>
+        
       </section>
+
+      
     </Layout>
   )
 }

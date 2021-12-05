@@ -13,8 +13,12 @@ const FilterMultiValDataComponent = (props: any) => {
             BookName: 'Book 1',
             IssueDate: '20/11/2021',
             Duedate: '28/11/2021',
-            Fine:0,
-            Returned: true
+            AmountFine:100, //if you return it late
+            Returned: true,
+            ReturnDate: '28/11/2021',
+            FineDate:'No fine',
+            LateFine:0 //total accumulated fine
+            //issue id??
         },
         {
             id: 2,
@@ -22,16 +26,21 @@ const FilterMultiValDataComponent = (props: any) => {
             BookName: 'Book 2',
             IssueDate: '20/11/2021',
             Duedate: '28/11/2021',
-            Fine:0,
-            Returned: true
+            AmountFine:100, 
+            Returned: true,
+            ReturnDate: '28/11/2021',
+            FineDate:'No fine',
+            LateFine:0 
+
         }
     ];
     /////////////////////
     const columnDefs: any[] = [
-        { title: 'ID', field: 'id' },
+        { title: 'Book ID', field: 'id' , editable: 'never' },
         {
         title: 'Book Name',
         field: 'BookName',
+        editable: 'never',
         cellStyle: {
             maxWidth: '75ch',
             whiteSpace: 'nowrap',
@@ -40,10 +49,18 @@ const FilterMultiValDataComponent = (props: any) => {
         },
         },
         { title: 'Issue Date', field: 'IssueDate' , editable: 'never'},
-        { title: 'Issued To', field: 'IssuedTo' },
+        { title: 'Due date', field: 'Duedate' , editable: 'never'},
+        { title: 'Amount Fine', field: 'AmountFine' , editable: 'never'},
+        { title: 'Return Date', field: 'ReturnDate' , editable: 'never'},
+        { title: 'Fine payed on date', field: 'FineDate' , editable: 'never'},
+        { title: 'Accumulated Fine', field: 'LateFine' , editable: 'never'},
+        
+        
         {
             title: 'Return Status',
             field: 'Returned',
+            editable:'never',
+            //Edit the following code:
             render: (rowData: any) => <Checkbox checked={rowData.Returned}></Checkbox>,
             editComponent: (props: any) => {
               return (
@@ -72,6 +89,7 @@ const FilterMultiValDataComponent = (props: any) => {
     // let newdata = dbData;
     // newdata = 'blah'
 
+    //change names here?
     const [issueHistory, setIssueHistory] = useState<any>(IssueHistoryData);
 
   return (
@@ -89,40 +107,41 @@ const FilterMultiValDataComponent = (props: any) => {
               data={issueHistory}
               columns={columnDefs}
               singleSelect={true}
-              editable={{
-                onRowAdd: (newAddedData) =>
-                  new Promise<void>((resolve, reject) => {
-                    setTimeout(() => {
-                        setIssueHistory([...issueHistory, newAddedData]);
-                      resolve();
-                    }, 1000);
-                  }),
-                onRowUpdate: (newData, oldData: any) =>
-                  new Promise<void>((resolve, reject) => {
-                    setTimeout(() => {
+              //this goes away:?
+              // editable={{
+              //   onRowAdd: (newAddedData) =>
+              //     new Promise<void>((resolve, reject) => {
+              //       setTimeout(() => {
+              //           setIssueHistory([...issueHistory, newAddedData]);
+              //         resolve();
+              //       }, 1000);
+              //     }),
+              //   onRowUpdate: (newData, oldData: any) =>
+              //     new Promise<void>((resolve, reject) => {
+              //       setTimeout(() => {
 
-                        const dataUpdate = [...issueHistory];
-                        const index = oldData.tableData.id;
-                        dataUpdate[index] = newData;
+              //           const dataUpdate = [...issueHistory];
+              //           const index = oldData.tableData.id;
+              //           dataUpdate[index] = newData;
 
-                        setIssueHistory([...dataUpdate]);
+              //           setIssueHistory([...dataUpdate]);
 
-                      resolve();
-                    }, 1000);
-                  }),
-                onRowDelete: (oldData: any) =>
-                  new Promise<void>((resolve, reject) => {
-                    setTimeout(() => {
+              //         resolve();
+              //       }, 1000);
+              //     }),
+              //   onRowDelete: (oldData: any) =>
+              //     new Promise<void>((resolve, reject) => {
+              //       setTimeout(() => {
 
-                        const dataDelete = [...issueHistory];
-                        const index = oldData.tableData.id;
-                        dataDelete.splice(index, 1); 
-                        setIssueHistory([...dataDelete]);
+              //           const dataDelete = [...issueHistory];
+              //           const index = oldData.tableData.id;
+              //           dataDelete.splice(index, 1); 
+              //           setIssueHistory([...dataDelete]);
 
-                      resolve();
-                    }, 1000);
-                  }),
-              }}
+              //         resolve();
+              //       }, 1000);
+              //     }),
+              // }}
             />
 
     </React.Fragment>
