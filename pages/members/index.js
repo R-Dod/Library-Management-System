@@ -1,14 +1,9 @@
-import React, { useMemo } from "react"
-import { useTable } from 'react-table'
+import React from "react"
 import Data from '../../components/members.json'
-import { COLUMNS } from '../../components/memberColumns'
-import MaterialDataTable from '../../shared-components/data-table';
+import MaterialDataTable from '../../shared-components/data-table'
 
 
 function memberlist(){
-
-    const columns = useMemo(() => COLUMNS, [])
-    const data = useMemo(() => Data, [])
     return (
 
     <React.Fragment>
@@ -80,8 +75,9 @@ function memberlist(){
     }}
   />
 
-  </React.Fragment>
-)}
+</React.Fragment>
+    )}
+// )}
     // const columns = useMemo(() => COLUMNS, [])
     // const data = useMemo(() => Data, [])
 

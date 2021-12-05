@@ -131,7 +131,7 @@ function BookList() {
                         </TableRow>
                         </TableHead>
                         <TableBody>
-                            {temp.map((book) => (
+                            {books.map((book) => (
                             <TableRow key={book.title}>
                                 <Link href = {`books/${book.id}`}><a>
                                     <TableCell component="th" scope="row">{book.id}</TableCell>

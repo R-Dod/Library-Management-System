@@ -6,7 +6,8 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import DataTable from "../../shared-components/data-table";
 import { useState } from "react";
-
+import Button from '@mui/material/Button';
+import styles from '../../components/layout.module.css';
 
 const copies: any[] = [
     { field: 'sno', title: '#', type:'number', width: 10 },
@@ -53,8 +54,6 @@ const rows: any = [
         ShelfNo: '3451'
     },        
 ];
-
-console.log(rows)
 
 const BookPage: NextPage<any, any> = function ({ book }) {
     const router = useRouter();
@@ -147,6 +146,7 @@ const BookPage: NextPage<any, any> = function ({ book }) {
                             exportButton: false,
                             draggable: false,
                             search: false,
+                            paging:false
                           }}
       title={'All Copies'}
               columns={copies}              
@@ -186,10 +186,8 @@ const BookPage: NextPage<any, any> = function ({ book }) {
                   }),
               }}
 
-              />
-                  <button>Save</button>
-
-    </div>
+              />&nbsp; <div>
+              <Button className={styles.button}>Save Changes</Button></div>&nbsp; </div>
 
     </div>
     )

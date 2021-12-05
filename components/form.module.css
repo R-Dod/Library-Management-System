@@ -1,0 +1,25 @@
+.container h1 {
+  width: 100%;
+  text-align: center;
+}
+.container div,
+.container label {
+  padding: 10px;
+  margin: 15px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-size: 20px;
+}
+
+.container form div .name {
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-size: 20px;
+}
+
+.container Button {
+  width: 100%;
+  height: 2%;
+  cursor: pointer;
+}
