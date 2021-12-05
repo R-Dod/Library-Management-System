@@ -1,0 +1,63 @@
+[
+    {
+        "id":101,
+        "firstname":"Ali",
+        "lastname": "Hassan",
+        "PhoneNo": "000111222",
+        "DOB": "2-DEC-99",
+        "email": "alihassan",
+        "address": "karachi",
+        "password": "aaaaaaaa"
+    },
+    {
+        "id":102,
+        "firstname":"Mahra",
+        "lastname": "'Sohail'",
+        "PhoneNo": "000111022",
+        "DOB": "'2-DEC-99'",
+        "email": "'mahrasohail'",
+        "address": "'karachi",
+        "password": "'aaaaaaaa'"
+    },
+    {
+        "id":103,
+        "firstname":"'Sajjad'",
+        "lastname": "'Haider'",
+        "PhoneNo": "'760111222'",
+        "DOB": "'2-DEC-99'",
+        "email": "'shaider'",
+        "address": "'karachi'",
+        "password": "a1234aaa"
+    },
+    {
+        "id":104,
+        "firstname":"'Sayeed'",
+        "lastname": "'Ghani'",
+        "PhoneNo": "'12345674'",
+        "DOB": "'2-DEC-99'",
+        "email": "'saghani'",
+        "address": "'karachi'",
+        "password": "'avvvacccaaa"
+    },
+    {
+        "id":105,
+        "firstname":"'Jibran'",
+        "lastname": "'Rashid",
+        "PhoneNo": "'500177122'",
+        "DOB": "'2-DEC-99'",
+        "email": "'jrashid'",
+        "address": "'karachi'",
+        "password": "'iadfkfi'"
+    },
+    {
+        "id":106,
+        "firstname":"Sarah",
+        "lastname": "Mazhar",
+        "PhoneNo": "040121322",
+        "DOB": "2-DEC-99",
+        "email":" sarahmaz",
+        "address": "karachi",
+        "password": "a1234aaaa"
+    }    
+]
+

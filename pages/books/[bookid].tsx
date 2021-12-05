@@ -5,11 +5,14 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import DataTable from "../../shared-components/data-table";
+import { useState } from "react";
+
+
 const copies: any[] = [
-    { field: 'sno', headerName: '#', type:'number', width: 10 },
-    { field: 'id', headerName: 'ID', type:'number', width: 10 },
-    { field: 'status', headerName: 'Status', width: 130 },
-    { field: 'ShelfNo', headerName: 'Shelf No.', width: 130 }
+    { field: 'sno', title: '#', type:'number', width: 10 },
+    { field: 'id', title: 'ID', type:'number', width: 10 },
+    { field: 'status', title: 'Status', width: 130 },
+    { field: 'ShelfNo', title: 'Shelf No.', width: 130 }
 ];
 
 const rows: any = [
@@ -51,8 +54,12 @@ const rows: any = [
     },        
 ];
 
+console.log(rows)
+
 const BookPage: NextPage<any, any> = function ({ book }) {
     const router = useRouter();
+    const [rowsvalue, setrows] = useState<any>(rows);
+
     return (
     <div>
         <h1>{book.title}</h1>
@@ -136,6 +143,7 @@ const BookPage: NextPage<any, any> = function ({ book }) {
           <DataTable
                         options={{
                             showSelectAllCheckbox: false,
+                            selection: false,
                             exportButton: false,
                             draggable: false,
                             search: false,
@@ -143,10 +151,45 @@ const BookPage: NextPage<any, any> = function ({ book }) {
       title={'All Copies'}
               columns={copies}              
               data={rows}
+              editable={{
+                onRowAdd: (newAddedData) =>
+                  new Promise<void>((resolve, reject) => {
+                    setTimeout(() => {
+                        setrows([...rows, newAddedData]);
+                      resolve();
+                    }, 1000);
+                  }),
+                onRowUpdate: (newData, oldData: any) =>
+                  new Promise<void>((resolve, reject) => {
+                    setTimeout(() => {
+
+                        const dataUpdate = [...rowsvalue];
+                        const index = oldData.tableData.id;
+                        dataUpdate[index] = newData;
+
+                        setrows([...dataUpdate]);
+
+                      resolve();
+                    }, 1000);
+                  }),
+                onRowDelete: (oldData: any) =>
+                  new Promise<void>((resolve, reject) => {
+                    setTimeout(() => {
+
+                        const dataDelete = [...rowsvalue];
+                        const index = oldData.tableData.id;
+                        dataDelete.splice(index, 1); 
+                        setrows([...dataDelete]);
+
+                      resolve();
+                    }, 1000);
+                  }),
+              }}
 
               />
+                  <button>Save</button>
+
     </div>
-    <button>Save</button>
 
     </div>
     )
@@ -186,8 +229,6 @@ const BookPage: NextPage<any, any> = function ({ book }) {
 };
 
 export default BookPage
-
-
 
 
 export const getStaticProps: GetStaticProps = async (context) =>{
