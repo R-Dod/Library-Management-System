@@ -39,10 +39,22 @@ const BookPage: NextPage<any, any> = function ({ bookID }) {
     });
   }, []);
 
+  const issueACopy = () => {
+    const insertInIssueHistory = {
+      user: '101',
+      book_id: bookID
+    }
+    axios.request({
+      url: url + `/issuereturn/insert`,
+      data: insertInIssueHistory,
+      method: 'POST',
+    }).then((response) => {
+      console.log('data received', response.data);
+    });
+  };
+
   return (
     <>
-
-
       {
         bookDetail ? (
           <Box sx={{ flexGrow: 1 }}>
@@ -79,6 +91,7 @@ const BookPage: NextPage<any, any> = function ({ bookID }) {
                 <button className="button" onClick={() => setButtonPopup(true)}>Issue</button>
                 <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
                   <h3> Book Issued! </h3>
+                  {(bookDetail.copies > 0) ? issueACopy() : issueACopy()}
                   {(bookDetail.copies > 0) ?
                     <p>
                       Please collect the book from us at the earliest.
