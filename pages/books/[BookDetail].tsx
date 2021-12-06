@@ -20,7 +20,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 const url = 'http://localhost:4000';
-
+const user = { user_name: 'Ali Hasan', user_id: '101' };
 const BookPage: NextPage<any, any> = function ({ bookID }) {
 
   const router = useRouter();
@@ -40,17 +40,21 @@ const BookPage: NextPage<any, any> = function ({ bookID }) {
   }, []);
 
   const issueACopy = () => {
-    const insertInIssueHistory = {
-      user: '101',
-      book_id: bookID
+
+    if (bookDetail.AVAILABLECOPIES == 0) { return; }
+    else {
+      const insertInIssueHistory = {
+        user: user.user_id,
+        book_id: bookID
+      }
+      axios.request({
+        url: url + `/issuereturn/insert`,
+        data: insertInIssueHistory,
+        method: 'POST',
+      }).then((response) => {
+        console.log('data received', response.data);
+      });
     }
-    axios.request({
-      url: url + `/issuereturn/insert`,
-      data: insertInIssueHistory,
-      method: 'POST',
-    }).then((response) => {
-      console.log('data received', response.data);
-    });
   };
 
   return (
@@ -88,11 +92,10 @@ const BookPage: NextPage<any, any> = function ({ bookID }) {
                   Original Cost: {bookDetail.COST}<br />
                   ISBN: {bookDetail.ISBN}<br />
                 </h5>
-                <button className="button" onClick={() => setButtonPopup(true)}>Issue</button>
+                <button className="button" onClick={() => { setButtonPopup(true); issueACopy(); }}>Issue</button>
                 <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
                   <h3> Book Issued! </h3>
-                  {(bookDetail.copies > 0) ? issueACopy() : issueACopy()}
-                  {(bookDetail.copies > 0) ?
+                  {(bookDetail.AVAILABLECOPIES > 0) ?
                     <p>
                       Please collect the book from us at the earliest.
                       The due date for returning the book is "within 2 weeks" !

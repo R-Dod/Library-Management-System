@@ -101,12 +101,18 @@ const FilterMultiValDataComponent = (props: any) => {
             new Promise<void>((resolve, reject) => {
               setTimeout(() => {
 
-                const dataUpdate = [...allIssueReturns];
-                const index = oldData.tableData.id;
-                dataUpdate[index] = newData;
+                axios.request({
+                  url: url + `/issuereturn/updatebyid`,
+                  data: newData,
+                  method: 'PUT',
+                }).then((response) => {
+                  const dataUpdate = [...allIssueReturns];
+                  const index = oldData.tableData.id;
+                  dataUpdate[index] = newData;
 
-                setAllIssueReturns([...dataUpdate]);
+                  setAllIssueReturns([...dataUpdate]);
 
+                });
                 resolve();
               }, 1000);
             }),
@@ -114,10 +120,16 @@ const FilterMultiValDataComponent = (props: any) => {
             new Promise<void>((resolve, reject) => {
               setTimeout(() => {
 
-                const dataDelete = [...allIssueReturns];
-                const index = oldData.tableData.id;
-                dataDelete.splice(index, 1);
-                setAllIssueReturns([...dataDelete]);
+                axios.request({
+                  url: url + `/issuereturn/deletebyid`,
+                  data: { id: oldData.ISSUE_ID },
+                  method: 'DELETE',
+                }).then((response) => {
+                  const dataDelete = [...allIssueReturns];
+                  const index = oldData.tableData.id;
+                  dataDelete.splice(index, 1);
+                  setAllIssueReturns([...dataDelete]);
+                });
 
                 resolve();
               }, 1000);
