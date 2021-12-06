@@ -31,7 +31,6 @@ const FilterMultiValDataComponent = (props: any) => {
 
   const columnDefs: any[] = [
     { title: 'Issue ID', field: 'ISSUE_ID' },
-    { title: 'Issue ID', field: 'ISSUE_ID' },
     {
       title: 'Member ID',
       field: 'MEMBER_ID',
@@ -82,7 +81,7 @@ const FilterMultiValDataComponent = (props: any) => {
         options={{
           exportButton: true,
           draggable: false,
-          actionsColumnIndex: 1,
+          actionsColumnIndex: 0,
           padding: 'dense',
           search: true,
         }}

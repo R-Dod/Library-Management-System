@@ -8,6 +8,7 @@ import axios from 'axios';
 
 
 const url = 'http://localhost:4000';
+const user = { user_name: 'Ali Hasan', user_id: '101' };
 
 const FilterMultiValDataComponent = (props: any) => {
   const [allIssueReturns, setAllIssueReturns] = useState<any>([]);
@@ -17,7 +18,8 @@ const FilterMultiValDataComponent = (props: any) => {
 
     axios.request({
       url: url + '/issuereturn/getAllUserSide',
-      method: 'GET',
+      data: user,
+      method: 'POST',
     }).then((response) => {
       console.log(response.data);
       setAllIssueReturns(response.data);
