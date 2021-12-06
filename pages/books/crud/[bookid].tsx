@@ -5,9 +5,16 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import DataTable from "../../../shared-components/data-table";
-import { useState } from "react";
 import Button from '@mui/material/Button';
 import styles from '../../../components/layout.module.css';
+import { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
+
+const url = 'http://localhost:4000';
+
+const [BookDetail, setBookDetail] = useState<any>([]);
+// receive database table here
+
 
 const copies: any[] = [
   { field: 'sno', title: '#', type: 'number', width: 10 },
@@ -200,7 +207,7 @@ export default BookPage
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { params } = context
-  const response = await fetch(`http://localhost:5000/books/${params.bookid}`)
+  const response = await fetch(`http://localhost:4000/book/getbyid?id=${params.BOOK_ID}`)
   const data = await response.json()
   return {
     props: {
@@ -210,7 +217,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const response = await fetch(`http://localhost:5000/books`)
+  const response = await fetch(`http://localhost:4000/book/getAll`)
   const data = await response.json()
 
   const paths = data.map((book) => {

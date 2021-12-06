@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { NextPage } from "next";
-import { useState } from 'react';
-import { books } from '../../db.json';
+import { useState, useEffect, useCallback } from 'react';
+//import { books } from '../../db.json';
 import MaterialDataTable from '../../shared-components/data-table';
 import 'react';
 import Table from '@mui/material/Table';
@@ -11,24 +11,44 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import axios from 'axios';
 
-const temp = books
+const url = 'http://localhost:4000';
+
+//const temp = books
 //console.log(books);
 
 const columns = [
-  { field: 'id', headerName: 'ID', type: 'number', width: 10 },
-  { field: 'title', headerName: 'Title', width: 130 },
-  { field: 'author', headerName: 'Author', width: 130 },
-  { field: 'category', headerName: 'Category', width: 130 },
-  { field: 'publisher', headerName: 'Publisher', width: 130 },
-  { field: 'cost', headerName: 'Cost', type: 'number', width: 10 },
+  { field: 'BOOK_ID', headerName: 'ID', type: 'number', width: 10 },
+  { field: 'TITLE', headerName: 'Title', width: 130 },
+  // { field: '', headerName: 'Author First Name', width: 130 },
+  // { field: '', headerName: 'Author Last Name', width: 130 },
+  // { field: 'category', headerName: 'Category', width: 130 },
+  { field: 'DATE_OF_PUBLISH', headerName: 'Publish Date', width: 130 },
+  { field: 'PUBLISHER_ID', headerName: 'Publisher ID', width: 130 },
+  { field: 'COST', headerName: 'Cost', type: 'number', width: 10 },
   { field: 'ISBN', headerName: 'ISBN', width: 10 }
 
 ];
 
-const data = books
+//const data = books
 
 function BookList() {
+
+  const [books, setAllBooks] = useState([]);
+  // receive database table here
+
+  useEffect(() => {
+
+    axios.request({
+      url: url + '/book/getAll',
+      method: 'GET',
+    }).then((response) => {
+      console.log(response.data);
+      setAllBooks(response.data);
+    });
+  }, []);
+
   return (
     <>
       {/* <MaterialDataTable
@@ -124,21 +144,21 @@ function BookList() {
             <TableRow>
               <TableCell>ID</TableCell>
               <TableCell>Title</TableCell>
-              <TableCell>Author(s)</TableCell>
-              <TableCell>Category(s)</TableCell>
-              <TableCell>Publisher</TableCell>
+              <TableCell>Publish Date</TableCell>
+              <TableCell>Publisher ID</TableCell>
               <TableCell>Cost</TableCell>
+              <TableCell>ISBN</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {books.map((book) => (
-              <TableRow key={book.title}>
-                <TableCell component="th" scope="row"><Link href={`books/crud/${book.id}`}><a>{book.id}</a></Link></TableCell>
-                <TableCell >{book.title}</TableCell>
-                <TableCell >{book.Author}</TableCell>
-                <TableCell >{book.Category}</TableCell>
-                <TableCell >{book.publisher}</TableCell>
-                <TableCell >{book.cost}</TableCell>
+              <TableRow key={book.BOOK_ID}>
+                <TableCell component="th" scope="row"><Link href={`books/crud/${book.BOOK_ID}`}><a>{book.BOOK_ID}</a></Link></TableCell>
+                <TableCell >{book.TITLE}</TableCell>
+                <TableCell >{book.PUBLISHER_ID}</TableCell>
+                <TableCell >{book.DATE_OF_PUBLISH}</TableCell>
+                <TableCell >{book.COST}</TableCell>
+                <TableCell >{book.ISBN}</TableCell>
                 <TableCell><Link href="#">Delete</Link></TableCell>
               </TableRow>
             ))}

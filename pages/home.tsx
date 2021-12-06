@@ -55,12 +55,12 @@ const Home: NextPage<any, any> = function () {
                       <Typography gutterBottom variant="body2">
                         {item.TITLE}
                       </Typography>
-                      {/* <Typography display="block" variant="caption" color="text.secondary">
-                        {item.first_name}
+                      <Typography display="block" variant="caption" color="text.secondary">
+                        {item.AUTHORS}
                       </Typography>
                       <Typography variant="caption" color="text.secondary">
-                        {`${item.category_name} • ${item.createdAt}`}
-                      </Typography> */}
+                        {`${item.CATEGORIES} `}
+                      </Typography>
                     </Box>
 
                   ) : (

@@ -74,10 +74,10 @@ const BookPage: NextPage<any, any> = function ({ bookID }) {
                   />
                 </Grid>
                 <Grid item xs={4}>
-                  <h3> Author: {bookDetail.first_name} </h3>
+                  <h3> Author: {bookDetail.AUTHORS} </h3>
                 </Grid>
                 <Grid item xs={4}>
-                  <h4>Category: {bookDetail.category_name}</h4>
+                  <h4>Category: {bookDetail.CATEGORIES}</h4>
                 </Grid>
                 <h5>
                   Publisher: {bookDetail.PUBLISHER_ID} <br />
