@@ -15,23 +15,23 @@
 }
 
 .button {
-  margin-left: 25%;
-  width: 50%;
-  padding: 10px;
-  background-color: darkcyan;
-  border: none;
-  align-items: center;
-  color: white;
+  width: 100%;
   text-align: center;
-  text-decoration: none;
+  padding-top: 2%;
+  padding-bottom: 3%;
+  border-radius: 10px;
+  background-color: #4e4caf;
+  display: inline-block;
+  color: white;
+  border: 2px solid #4e4caf;
   display: inline-block;
   font-size: 16px;
-  transition-duration: 0.2s;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
   cursor: pointer;
 }
 
 .button:hover {
-  border: 2px solid darkcyan;
-  background-color: white;
+  background-color: rgb(227, 252, 250);
   color: black;
 }
