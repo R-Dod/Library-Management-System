@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }) {
     <>
 
       <Navbar />
-      <div>Welcome User!</div>
+      {/* <div>Welcome User!</div> */}
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
           <Grid item xs={1} />

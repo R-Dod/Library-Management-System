@@ -30,7 +30,7 @@ const FilterMultiValDataComponent = (props: any) => {
 
 
   const columnDefs: any[] = [
-    { title: 'Issue ID', field: 'ISSUE_ID' },
+    { title: 'Issue ID', field: 'ISSUE_ID', editable: 'never' },
     {
       title: 'Member ID',
       field: 'MEMBER_ID',
@@ -50,17 +50,16 @@ const FilterMultiValDataComponent = (props: any) => {
     { title: 'FINE_DATE', field: 'FINE_DATE' },
     { title: 'AMOUNT_FINE', field: 'AMOUNT_FINE' },
 
-
     {
       title: 'Return Status',
-      field: 'Returned',
+      //field: 'RETURN_DATE', //existence of return_date
 
       //Edit the following code:
-      render: (rowData: any) => <Checkbox checked={rowData.Returned}></Checkbox>,
+      render: (rowData: any) => <Checkbox checked={rowData.RETURN_DATE ? true : false}></Checkbox>,
       editComponent: (props: any) => {
         return (
           <Checkbox
-            checked={props.rowData.Returned}
+            checked={props.rowData.RETURN_DATE ? true : false}
             onChange={(e) => {
               const newRowData = { ...props.rowData, Returned: e.target.checked };
               props.onRowDataChange(newRowData);
@@ -93,14 +92,22 @@ const FilterMultiValDataComponent = (props: any) => {
           onRowAdd: (newAddedData) =>
             new Promise<void>((resolve, reject) => {
               setTimeout(() => {
-                setAllIssueReturns([...allIssueReturns, newAddedData]);
+                axios.request({
+                  url: url + `/issuereturn/insertbyadmin`,
+                  data: newAddedData,
+                  method: 'POST',
+                }).then((response) => {
+                  // const dataUpdate = [...allIssueReturns];
+                  // const index = oldData.tableData.id;
+                  // dataUpdate[index] = newData;
+                  setAllIssueReturns([...allIssueReturns, newAddedData]);
+                });
                 resolve();
               }, 1000);
             }),
           onRowUpdate: (newData, oldData: any) =>
             new Promise<void>((resolve, reject) => {
               setTimeout(() => {
-
                 axios.request({
                   url: url + `/issuereturn/updatebyid`,
                   data: newData,

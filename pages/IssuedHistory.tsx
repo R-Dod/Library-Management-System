@@ -27,28 +27,28 @@ const FilterMultiValDataComponent = (props: any) => {
   }, []);
 
   const columnDefs: any[] = [
-    { title: 'Book Name', field: 'title', editable: 'never' },
+    { title: 'Book Name', field: 'TITLE', editable: 'never' },
     { title: 'Issue date', field: 'ISSUE_DATE', editable: 'never' },
     { title: 'Due date', field: 'DUE_DATE', editable: 'never' },
     { title: 'Amount fine if book not returned', field: 'AMOUNT_FINE', editable: 'never' },
-
     {
       title: 'Return Status',
-      field: 'Returned',
+      field: 'RETURN_DATE',
+      //field: 'RETURN_DATE', //if its not null, check the box
       editable: 'never',
       //Edit the following code:
-      render: (rowData: any) => <Checkbox disabled checked={rowData.Returned}></Checkbox>,
-      editComponent: (props: any) => {
-        return (
-          <Checkbox
-            checked={props.rowData.Returned}
-          // onChange={(e) => {
-          //   const newRowData = { ...props.rowData, Returned: e.target.checked };
-          //   props.onRowDataChange(newRowData);
-          // }}
-          />
-        );
-      },
+      render: (rowData: any) => <Checkbox disabled checked={rowData.RETURN_DATE ? true : false}></Checkbox>,
+      // editComponent: (props: any) => {
+      //   return (
+      //     <Checkbox
+      //       checked={props.rowData.RETURN_DATE ? true : false}
+      //     // onChange={(e) => {
+      //     //   const newRowData = { ...props.rowData, Returned: e.target.checked };
+      //     //   props.onRowDataChange(newRowData);
+      //     // }}
+      //     />
+      //   );
+      // },
     },
     { title: 'Accumulated late fine', field: 'LATE_FINE', editable: 'never' },
     { title: 'Returned on date', field: 'RETURN_DATE', editable: 'never' },
@@ -69,7 +69,7 @@ const FilterMultiValDataComponent = (props: any) => {
           padding: 'dense',
           search: true,
         }}
-        title={'The books you have issued'}
+        title={'Your Issue History'}
         data={allIssueReturns}
         columns={columnDefs}
         singleSelect={true}

@@ -62,37 +62,55 @@ const BookPage: NextPage<any, any> = function ({ bookID }) {
       {
         bookDetail ? (
           <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={2} />
-              <Grid item xs={8}>
-                <Grid item xs={4}>
-                  <Item> <h1 >{bookDetail.TITLE}</h1></Item>
+            <Grid container>
+              <Grid item xs={12}>
+                <Grid item xs={12}>
+                  <Item> <h1>{bookDetail.TITLE}</h1></Item>
                 </Grid>
-                <Grid item xs={4}>
-                  <Image
-                    priority
-                    src={`/images/${bookDetail.BOOK_ID}.jpg`}
-                    height={144}
-                    width={144}
-                    alt={`${bookDetail.id}`}
-                  />
+                <Grid item xs={12}>
+                  <Item>
+                    <Image
+                      priority
+                      src={`/images/${bookDetail.BOOK_ID}.jpg`}
+                      height={300}
+                      width={300}
+                      alt={`${bookDetail.id}`}
+                    />
+                  </Item>
                 </Grid>
-                <Grid item xs={4}>
-                  <h3> Author: {bookDetail.AUTHORS} </h3>
+                <Grid item xs={12}>
+                  <Item>  <h3> Author: {bookDetail.AUTHORS} </h3> </Item>
                 </Grid>
-                <Grid item xs={4}>
-                  <h4>Category: {bookDetail.CATEGORIES}</h4>
+                <Grid item xs={12}>
+                  <Item>  <h4>Category: {bookDetail.CATEGORIES}</h4> </Item>
                 </Grid>
-                <h5>
-                  Publisher: {bookDetail.PUBLISHER_ID} <br />
-                  Published on: {bookDetail.DATE_OF_PUBLISH}<br />
-                  <br />
-                  Description: {bookDetail.DESCRIPTION}<br />
-                  <br />
-                  Original Cost: {bookDetail.COST}<br />
-                  ISBN: {bookDetail.ISBN}<br />
-                </h5>
-                <button className="button" onClick={() => { setButtonPopup(true); issueACopy(); }}>Issue</button>
+                <Grid item xs={12}>
+                  <Item>
+                    <h5>
+                      Publisher: {bookDetail.PUBLISHER_ID} <br />
+                      Published on: {bookDetail.DATE_OF_PUBLISH}<br />
+                      <br />
+                    </h5>
+                  </Item>
+                </Grid>
+                <Grid item xs={12}>
+                  <Item>
+                    Description: {bookDetail.DESCRIPTION}<br />
+                    <br />
+                  </Item>
+                </Grid>
+                <Grid item xs={12}>
+                  <Item>
+                    Original Cost: {bookDetail.COST}<br />
+                    ISBN: {bookDetail.ISBN}<br />
+                  </Item>
+                </Grid>
+                <Grid item xs={12}>
+                  <Item>
+                    <button className="button" onClick={() => { setButtonPopup(true); issueACopy(); }}>Issue
+                    </button>
+                  </Item>
+                </Grid>
                 <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
                   <h3> Book Issued! </h3>
                   {(bookDetail.AVAILABLECOPIES > 0) ?
@@ -108,8 +126,6 @@ const BookPage: NextPage<any, any> = function ({ bookID }) {
                   }
                 </Popup>
               </Grid>
-
-              <Grid item xs={2} />
             </Grid>
           </Box>
         )
