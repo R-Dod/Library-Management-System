@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Box, Grid } from '@material-ui/core';
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
-
 import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import axios from 'axios';

@@ -248,16 +248,18 @@ import * as React from 'react';
 // //   }
 // // }
 
+
 const copies: any[] = [
   //{ field: 'sno', title: '#', type: 'number', width: 10 },
   { field: 'COPY_ID', title: 'ID', type: 'number', width: 10 , editable: 'never'},
-  { field: 'STATUS', title: 'Status', width: 130 },
+  { field: 'STATUS', title: 'Status', width: 130 , editable: 'onUpdate'},
   { field: 'SHELF_NO', title: 'Shelf No.', width: 130 }
 ];
 
 
 function BookInfo({book}) {
-    // const [book, setbook] = useState<any>([]);
+     const [bookdetails, setbookdetails] = useState<any>({book});
+     //console.log('Book Details',bookdetails.book.TITLE)
      const [BookCopies, setBookCopies] = useState<any>([]);
 
 
@@ -268,8 +270,8 @@ function BookInfo({book}) {
 
       method: 'GET',
     }).then((response) => {
-      console.log('data received', response.data);
-      console.log(book.BOOK_ID)
+      //console.log('data received', response.data);
+      //console.log(book.BOOK_ID)
       setBookCopies(response.data);
       console.log('BookCopies', BookCopies)
     });
@@ -297,17 +299,19 @@ function BookInfo({book}) {
           }}
           variant="filled"
         />
-        <h1> <TextField
+        <TextField
           required
           id="title"
           label="Title"
           defaultValue={book.TITLE}
+          //onChange={this.handleTitle}
           variant="filled"
-        /></h1>
+        />
         <TextField
           id="author"
           label="Authors"
           defaultValue={book.AUTHORS}
+          //onChange={this.handleAuthors}
           variant="filled"
         />
         <TextField
@@ -318,8 +322,9 @@ function BookInfo({book}) {
         />
         <TextField
           id="publisher"
-          label="Publisher"
+          label="Publisher_id"
           defaultValue={book.PUBLISHER_ID}
+          //onChange={this.handlePubID}
           variant="filled"
         />
         <TextField
@@ -327,6 +332,7 @@ function BookInfo({book}) {
           //type="date"
           label="Date"
           defaultValue={book.DATE_OF_PUBLISH}
+          //onChange={this.handleDate}
           variant="filled"
         />
 
@@ -335,6 +341,7 @@ function BookInfo({book}) {
           label="Cost"
           type="number"
           defaultValue={book.COST}
+         // onChange={this.handleCost}
           // InputLabelProps={{
           //   shrink: true,
           // }}
@@ -349,10 +356,11 @@ function BookInfo({book}) {
         />
 
         <TextField
-          id="standard-multiline-static"
+          id="Description"
           label="Description"
           multiline
           defaultValue={book.DESCRIPTION}
+          //onChange={this.handleDesc}
           variant="filled"
         />
 
@@ -459,12 +467,6 @@ function BookInfo({book}) {
 
     </div>
    )
-  // return(
-  // <>
-  // <h2>{BookInfo.BOOK_ID} {BookInfo.TITLE}</h2>
-  // <p>{BookInfo.DESCRIPTION}</p>
-  // </>
-  // )
 
 }
 

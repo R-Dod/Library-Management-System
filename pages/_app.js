@@ -7,8 +7,7 @@ import Grid from '@mui/material/Grid';
 export default function App({ Component, pageProps }) {
   return (
     <>
-
-      <Navbar />
+    <Navbar/>
       <div>Welcome User!</div>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>

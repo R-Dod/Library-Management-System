@@ -60,7 +60,6 @@ const FilterMultiValDataComponent = (props: any) => {
 
   return (
     <React.Fragment>
-
       <MaterialDataTable
         options={{
           exportButton: true,

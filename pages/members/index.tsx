@@ -13,7 +13,7 @@ function memberlist() {
     { field: 'DOB', title: 'Date of Birth' },
     { field: 'email', title: 'Email' },
     { field: 'address', title: 'Address' },
-    { field: 'password', title: 'Password' }
+    { field: 'password', title: 'Password'}
   ];
   const membersData: any[] = Data;
   const [memberList, setMemberList] = useState<any[]>(membersData);

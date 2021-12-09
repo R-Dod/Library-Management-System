@@ -18,24 +18,12 @@ const url = 'http://localhost:4000';
 //const temp = books
 //console.log(books);
 
-const columns = [
-  { field: 'BOOK_ID', headerName: 'ID', type: 'number', width: 10 },
-  { field: 'TITLE', headerName: 'Title', width: 130 },
-  // { field: '', headerName: 'Author First Name', width: 130 },
-  // { field: '', headerName: 'Author Last Name', width: 130 },
-  // { field: 'category', headerName: 'Category', width: 130 },
-  { field: 'DATE_OF_PUBLISH', headerName: 'Publish Date', width: 130 },
-  { field: 'PUBLISHER_ID', headerName: 'Publisher ID', width: 130 },
-  { field: 'COST', headerName: 'Cost', type: 'number', width: 10 },
-  { field: 'ISBN', headerName: 'ISBN', width: 10 }
-
-];
 
 //const data = books
 
 function BookList() {
 
-  const [books, setAllBooks] = useState([]);
+  const [Allbooks, setAllBooks] = useState([]);
   // receive database table here
 
   useEffect(() => {
@@ -56,6 +44,7 @@ function BookList() {
   title="All Books"
       options={{
         selection: false,
+        actionsColumnIndex: -1,
         //detailPanelType: "single",
         paging: true,
         toolbar: true,
@@ -71,7 +60,7 @@ function BookList() {
         rowStyle: (x) => {
           const styles = {
             font: 'Proxima Nova',
-            fontSize: '14px',
+            fontSize: '15px',
             lineHeight: '65px',
             color: '#020A20',
             background: '',
@@ -82,7 +71,7 @@ function BookList() {
       }}
      columns={
         [
-            { field: 'BOOK_ID', title: 'ID', type:'number', width: 10,
+            { field: 'BOOK_ID', title: 'ID', type:'number', width: 10, editable: 'never',
             render: rowData => <a href={`books/crud/${rowData.BOOK_ID}`}>{rowData.BOOK_ID}</a>},
             { field: 'TITLE', title: 'Title', width: 130 },
             { field: 'AUTHORS', title: 'Author', width: 130 },
@@ -92,36 +81,52 @@ function BookList() {
             { field: 'ISBN', title: 'ISBN', width: 10 }
         ]
      }
-     data={books}
+     data={Allbooks}
      editable={{
         onRowAdd: (newAddedData) =>
           new Promise((resolve, reject) => {
             setTimeout(() => {
-                setIssueHistory([...issueHistory, newAddedData]);
+              axios.request({
+                url: url + `/book/insert`,
+                data: newAddedData,
+                method: 'POST',
+              }).then((response) => {
+                console.log(response.data)
+                //setBookCopies(response.data);  
+                setAllBooks([...Allbooks, response.data]);
+              });                
+                //setIssueHistory([...issueHistory, newAddedData]);
               resolve();
             }, 1000);
           }),
-        onRowUpdate: (newData, oldData) =>
-          new Promise((resolve, reject) => {
-            setTimeout(() => {
+        // onRowUpdate: (newData, oldData) =>
+        //   new Promise((resolve, reject) => {
+        //     setTimeout(() => {
 
-                const dataUpdate = [...issueHistory];
-                const index = oldData.tableData.id;
-                dataUpdate[index] = newData;
+        //         const dataUpdate = [...issueHistory];
+        //         const index = oldData.tableData.id;
+        //         dataUpdate[index] = newData;
 
-                setIssueHistory([...dataUpdate]);
+        //         setIssueHistory([...dataUpdate]);
 
-              resolve();
-            }, 1000);
-          }),
+        //       resolve();
+        //     }, 1000);
+        //   }),
         onRowDelete: (oldData) =>
           new Promise((resolve, reject) => {
             setTimeout(() => {
 
-                const dataDelete = [...issueHistory];
+              axios.request({
+                url: url + `/book/deletebyid/${oldData.BOOK_ID}`,
+                //data: { id: oldData.ISSUE_ID },
+                method: 'DELETE',
+              }).then((response) => {
+                console.log(response.data)
+                const dataDelete = [...Allbooks];
                 const index = oldData.tableData.id;
-                dataDelete.splice(index, 1); 
-                setIssueHistory([...dataDelete]);
+                dataDelete.splice(index, 1);
+                setAllBooks([...dataDelete]);
+              });
 
               resolve();
             }, 1000);
