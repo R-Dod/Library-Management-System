@@ -30,9 +30,9 @@ const FilterMultiValDataComponent = (props: any) => {
 
 
   const columnDefs: any[] = [
-    { title: 'Issue ID', field: 'ISSUE_ID', editable: 'never' },
+    { title: 'Issue_ID', field: 'ISSUE_ID', editable: 'never' },
     {
-      title: 'Member ID',
+      title: 'Member_ID',
       field: 'MEMBER_ID',
 
       // cellStyle: {
@@ -126,14 +126,15 @@ const FilterMultiValDataComponent = (props: any) => {
           onRowDelete: (oldData: any) =>
             new Promise<void>((resolve, reject) => {
               setTimeout(() => {
-
                 axios.request({
                   url: url + `/issuereturn/deletebyid`,
                   data: { id: oldData.ISSUE_ID },
                   method: 'DELETE',
                 }).then((response) => {
+                  console.log(oldData);
                   const dataDelete = [...allIssueReturns];
                   const index = oldData.tableData.id;
+                  console.log(index);
                   dataDelete.splice(index, 1);
                   setAllIssueReturns([...dataDelete]);
                 });
