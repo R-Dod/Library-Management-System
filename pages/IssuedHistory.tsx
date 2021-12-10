@@ -7,7 +7,6 @@ import { NextPage } from 'next';
 import axios from 'axios';
 import moment from 'moment';
 
-
 const url = 'http://localhost:4000';
 const user = { user_name: 'Ali Hasan', user_id: '101' };
 
@@ -29,7 +28,10 @@ const FilterMultiValDataComponent = (props: any) => {
 
   const columnDefs: any[] = [
     { title: 'Book Name', field: 'TITLE', editable: 'never' },
-    { title: 'Issue date', field: 'ISSUE_DATE', editable: 'never' },
+    {
+      title: 'Issue date', field: 'ISSUE_DATE', editable: 'never', type: "date",
+      render: rowData => moment(rowData.DUE_DATE).format('DD-MMM-YY')
+    },
     {
       title: 'Due date', field: 'DUE_DATE', editable: 'never', type: "date",
       render: rowData => moment(rowData.DUE_DATE).format('DD-MMM-YY')
@@ -55,8 +57,14 @@ const FilterMultiValDataComponent = (props: any) => {
       // },
     },
     { title: 'Accumulated late fine', field: 'LATE_FINE', editable: 'never' },
-    { title: 'Returned on date', field: 'RETURN_DATE', editable: 'never' },
-    { title: 'fine payed on date', field: 'FINE_DATE', editable: 'never' },
+    {
+      title: 'Returned on date', field: 'RETURN_DATE', editable: 'never', type: "date",
+      render: rowData => moment(rowData.DUE_DATE).format('DD-MMM-YY')
+    },
+    {
+      title: 'fine payed on date', field: 'FINE_DATE', editable: 'never', type: "date",
+      render: rowData => moment(rowData.DUE_DATE).format('DD-MMM-YY')
+    },
     { title: 'Fine Amount', field: 'AMOUNT_FINE', editable: 'never' },
 
 

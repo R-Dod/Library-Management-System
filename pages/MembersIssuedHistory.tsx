@@ -5,6 +5,7 @@ import { Box, Checkbox, Grid, IconButton, Tooltip } from '@material-ui/core';
 import MaterialDataTable from '../shared-components/data-table';
 import { NextPage } from 'next';
 import axios from 'axios';
+import moment from 'moment';
 
 
 const url = 'http://localhost:4000';
@@ -43,11 +44,23 @@ const FilterMultiValDataComponent = (props: any) => {
       // },
     },
     { title: 'Copy_ID', field: 'COPY_ID' },
-    { title: 'ISSUE_DATE', field: 'ISSUE_DATE' },
-    { title: 'DUE_DATE', field: 'DUE_DATE' },
+    {
+      title: 'ISSUE_DATE', field: 'ISSUE_DATE', type: "date",
+      render: rowData => moment(rowData.DUE_DATE).format('DD-MMM-YY')
+    },
+    {
+      title: 'DUE_DATE', field: 'DUE_DATE', type: "date",
+      render: rowData => moment(rowData.DUE_DATE).format('DD-MMM-YY')
+    },
     { title: 'LATE_FINE', field: 'LATE_FINE' },
-    { title: 'RETURN_DATE', field: 'RETURN_DATE' },
-    { title: 'FINE_DATE', field: 'FINE_DATE' },
+    {
+      title: 'RETURN_DATE', field: 'RETURN_DATE', type: "date",
+      render: rowData => moment(rowData.DUE_DATE).format('DD-MMM-YY')
+    },
+    {
+      title: 'FINE_DATE', field: 'FINE_DATE', type: "date",
+      render: rowData => moment(rowData.DUE_DATE).format('DD-MMM-YY')
+    },
     { title: 'AMOUNT_FINE', field: 'AMOUNT_FINE' },
     {
       title: 'Return Status',
