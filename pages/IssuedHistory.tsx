@@ -5,6 +5,7 @@ import MaterialDataTable from '../shared-components/data-table';
 import React, { useCallback, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import axios from 'axios';
+import moment from 'moment';
 
 
 const url = 'http://localhost:4000';
@@ -29,7 +30,10 @@ const FilterMultiValDataComponent = (props: any) => {
   const columnDefs: any[] = [
     { title: 'Book Name', field: 'TITLE', editable: 'never' },
     { title: 'Issue date', field: 'ISSUE_DATE', editable: 'never' },
-    { title: 'Due date', field: 'DUE_DATE', editable: 'never' },
+    {
+      title: 'Due date', field: 'DUE_DATE', editable: 'never', type: "date",
+      render: rowData => moment(rowData.DUE_DATE).format('DD-MMM-YY')
+    },
     { title: 'Amount fine if book not returned', field: 'AMOUNT_FINE', editable: 'never' },
     {
       title: 'Return Status',
