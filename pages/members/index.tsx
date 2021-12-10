@@ -1,31 +1,51 @@
 import React from "react"
-import Data from '../../components/members.json'
 import MaterialDataTable from '../../shared-components/data-table'
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios';
+import moment from 'moment';
+
+const url = 'http://localhost:4000';
 
 function memberlist() {
 
-  const membersDataColumns = [
-    { field: 'id', title: 'ID', editable: 'never' },
-    { field: 'firstname', title: 'First Name', },
-    { field: 'lastname', title: 'Last Name' },
-    { field: 'PhoneNo', title: 'Phone Number' },
-    { field: 'DOB', title: 'Date of Birth' },
-    { field: 'email', title: 'Email' },
-    { field: 'address', title: 'Address' },
-    { field: 'password', title: 'Password'}
+  const membersDataColumns: any[] = [
+    { field: 'MEMBER_ID', title: 'ID', editable: 'never' },
+    { field: 'FIRST_NAME', title: 'First Name' },
+    { field: 'LAST_NAME', title: 'Last Name' },
+    { field: 'PHONE_NUMBER', title: 'Phone Number' },
+    { field: 'DATE_OF_BIRTH', title: 'Date of Birth',
+    render: rowData => moment(rowData.DATE_OF_BIRTH).format('DD-MMM-YY')
+  },
+    { field: 'EMAIL', title: 'Email' },
+    { field: 'ADDRESS', title: 'Address' },
+    { field: 'PASSWORD', title: 'Password',
+    render: rowData => 
+    <p typeof="password"/>},
+
   ];
-  const membersData: any[] = Data;
-  const [memberList, setMemberList] = useState<any[]>(membersData);
+  const [memberList, setMemberList] = useState<any>([]);
+
+    useEffect(() => {
+
+    axios.request({
+      url: url + `/member/getAll`,
+
+      method: 'GET',
+    }).then((response) => {
+      console.log('data received', response.data.data);
+      //console.log(response.data)
+      setMemberList(response.data.data);
+    });
+  }, []);
 
   return (
 
     <React.Fragment>
       <MaterialDataTable
         options={{
-          exportButton: true,
+          exportButton: false,
           draggable: false,
-          actionsColumnIndex: 1,
+          actionsColumnIndex: -1,
           search: true,
         }}
         title={'Members'}
@@ -36,31 +56,50 @@ function memberlist() {
           onRowAdd: (newAddedData) =>
             new Promise((resolve, reject) => {
               setTimeout(() => {
-                setMemberList([...memberList, newAddedData]);
+                axios.request({
+                  url: url + `/member/insert`,
+                  data: newAddedData,
+                  method: 'POST',
+                }).then((response) => {
+                  console.log('newAddedData', newAddedData)
+                  setMemberList([...memberList, newAddedData]);
+                }); 
                 resolve(null);
               }, 1000)
             }),
-          onRowUpdate: (newData, oldData: any) =>
-            new Promise((resolve, reject) => {
+            onRowUpdate: (newData, oldData: any) =>
+            new Promise<void>((resolve, reject) => {
               setTimeout(() => {
 
-                const dataUpdate = [...memberList];
-                const index = oldData.tableData.id;
-                dataUpdate[index] = newData;
+                axios.request({
+                  url: url + `/member/edit/${oldData.MEMBER_ID}`,
+                  data: newData,
+                  method: 'PUT',
+                }).then((response) => {
+                  const dataUpdate = [...memberList];
+                  const index = oldData.tableData.id;
+                  //alert(oldData.tableData.id);
+                  console.log(response.data)
+                  dataUpdate[index] = newData;
+                  setMemberList([...dataUpdate]);
 
-                setMemberList([...dataUpdate]);
-
-                resolve(null);
+                });
+                resolve();
               }, 1000);
             }),
           onRowDelete: (oldData: any) =>
             new Promise((resolve, reject) => {
               setTimeout(() => {
-
-                const dataDelete = [...memberList];
-                const index = oldData.tableData.id;
-                dataDelete.splice(index, 1);
-                setMemberList([...dataDelete]);
+                axios.request({
+                  url: url + `/member/remove/${oldData.MEMBER_ID}`,
+                  method: 'DELETE',
+                }).then((response) => {
+                  console.log(response.data)
+                  const dataDelete = [...memberList];
+                  const index = oldData.tableData.id;
+                  dataDelete.splice(index, 1);
+                  setMemberList([...dataDelete]);
+                });
 
                 resolve(null);
               }, 1000);
@@ -71,57 +110,6 @@ function memberlist() {
     </React.Fragment>
   )
 }
-// )}
-// const columns = useMemo(() => COLUMNS, [])
-// const data = useMemo(() => Data, [])
-
-// const TableInstance = useTable({
-//     columns,
-//     data
-// })
-
-
-
-// const {
-//     getTableProps,
-//     getTableBodyProps,
-//     headerGroups,
-//     rows,
-//     prepareRow
-// } = TableInstance
-
-
-// return (
-//     <table {...getTableProps()}>
-//         <thead>
-//             {
-//                 headerGroups.map(headerGroup => {
-//                 <tr {...headerGroup.getHeaderGroupProps()}>
-//                     {
-//                         headerGroup.headers.map(column => {
-//                          <th {...column.getHeaderProps()}>{column.render('Header')}</th> 
-//                          console.log(headerGroup)  
-//                         })}
-//                 </tr>   
-//                 })}
-//         </thead>
-//         <tbody {...getTableBodyProps()}>
-//             {
-//                 rows.map(row => {
-//                     prepareRow(row)
-//                     return (
-//                     <tr {...row.getRowProps()}>
-//                         {
-//                             row.cells.map(cell=>{
-//                         <td {...cell.getCellProps()}>{cell.render('Cell')}</td>                                    
-//                             })}
-//                         </tr>                            
-//                     )
-//                 })
-//             }
-
-//         </tbody>
-//     </table>
-// )
 
 export default memberlist
+

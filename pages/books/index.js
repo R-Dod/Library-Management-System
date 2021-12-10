@@ -1,17 +1,9 @@
-import Link from 'next/link';
-import { NextPage } from "next";
-import { useState, useEffect, useCallback } from 'react';
-//import { books } from '../../db.json';
+import { useState, useEffect } from 'react';
 import MaterialDataTable from '../../shared-components/data-table';
 import 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import axios from 'axios';
+import moment from 'moment';
+
 
 const url = 'http://localhost:4000';
 
@@ -77,7 +69,9 @@ function BookList() {
             { field: 'AUTHORS', title: 'Author', width: 130 },
             { field: 'CATEGORIES', title: 'Category',  width: 130 },
             { field: 'PUBLISHER_ID', title: 'Publisher', width: 130 },
-            { field: 'DATE_OF_PUBLISH', title: 'Published On',type:'number', width: 10 },
+            { field: 'DATE_OF_PUBLISH', title: 'Published On',type:'number', width: 10,
+            render: rowData => moment(rowData.DATE_OF_PUBLISH).format('DD-MMM-YY')
+          },
             { field: 'ISBN', title: 'ISBN', width: 10 }
         ]
      }
@@ -91,9 +85,9 @@ function BookList() {
                 data: newAddedData,
                 method: 'POST',
               }).then((response) => {
-                console.log(response.data)
+                console.log('newAddedData',newAddedData)
                 //setBookCopies(response.data);  
-                setAllBooks([...Allbooks, response.data]);
+                setAllBooks([...Allbooks, newAddedData]);
               });                
                 //setIssueHistory([...issueHistory, newAddedData]);
               resolve();

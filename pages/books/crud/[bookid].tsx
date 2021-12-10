@@ -3,6 +3,7 @@
 import { Book, Copyright, Add } from "@material-ui/icons";
 import { GetStaticProps, GetStaticPaths } from "next";
 import * as React from 'react';
+import{ Component } from 'react'
  import Box from '@mui/material/Box';
  import TextField from '@mui/material/TextField';
  import DataTable from "../../../shared-components/data-table";
@@ -10,6 +11,7 @@ import * as React from 'react';
  import styles from '../../../components/layout.module.css';
  import { useState, useEffect, useCallback } from 'react';
  import axios from 'axios';
+ import moment from 'moment';
 
 
  const url = 'http://localhost:4000';
@@ -249,6 +251,40 @@ import * as React from 'react';
 // // }
 
 
+// class BookPage extends Component {
+//   constructor(props) {
+//     super(props)
+//     const [bookdetails, setbookdetails] = useState<any>(book);
+
+//     useEffect(() => {
+
+//       axios.request({
+//         url: url + `http://localhost:4000/book/getbyid?id=${book.BOOK_ID}`,
+//         method: 'GET',
+//       }).then((response) => {
+//         //console.log('data received', response.data);
+//         //console.log(book.BOOK_ID)
+//         setbookdetails(response.data);
+//         console.log('BookCopies', BookCopies)
+//       });
+//     }, []);
+//     this.state = {
+
+//       BOOK_ID : `${bookdetails.BOOK_ID}`,
+//       TITLE : `${bookdetails.TITLE}`,
+//       AUTHORS: `${bookdetails.AUTHORS}`,
+//       CATEGORIES: `${bookdetails.CATEGORIES}`,
+//       PUBLISHER_ID: `${bookdetails.PUBLISHER_ID}`,
+//       DATE_OF_PUBLISH: `${bookdetails.DATE_OF_PUBLISH}`,
+//       DESCRIPTION: `${bookdetails.DESCRIPTION}`,
+//       COST: `${bookdetails.COST}`,
+//       ISBN: `${bookdetails.ISBN}`      
+
+//     }
+//   }
+// }
+
+
 const copies: any[] = [
   //{ field: 'sno', title: '#', type: 'number', width: 10 },
   { field: 'COPY_ID', title: 'ID', type: 'number', width: 10 , editable: 'never'},
@@ -256,12 +292,83 @@ const copies: any[] = [
   { field: 'SHELF_NO', title: 'Shelf No.', width: 130 }
 ];
 
+let state = {
+      BOOK_ID : '',
+      TITLE : '',
+      AUTHORS: '',
+      CATEGORIES: '',
+      PUBLISHER_ID: '',
+      DATE_OF_PUBLISH: '',
+      DESCRIPTION: '',
+      COST: '',
+      ISBN: ''
+}
+
+function handleTitle(e) {
+  state.TITLE = e.target.value;
+  console.log('value e', e)
+}
+
+function handlePubID(e) {
+  state.PUBLISHER_ID = e.target.value;
+  console.log('State values', state)
+}
+function handleDate(e) {
+  state.DATE_OF_PUBLISH = e.target.value;
+  console.log('State values', state)
+}
+
+function handleDesc(e) {
+  state.DESCRIPTION = e.target.value;
+  console.log('State values', state)
+}
+
+function handleCost(e) {
+  state.COST = e.target.value;
+  console.log('State values', state)
+}
+
+function handleISBN(e) {
+  state.ISBN = e.target.value;
+  console.log('State values', state)
+}
+
+
+
 
 function BookInfo({book}) {
-     const [bookdetails, setbookdetails] = useState<any>({book});
-     //console.log('Book Details',bookdetails.book.TITLE)
+     const [bookdetails, setbookdetails] = useState<any>(book);
+     //console.log('Book Details',bookdetails)
      const [BookCopies, setBookCopies] = useState<any>([]);
 
+    //  function UpdateBookDetails() {
+    //   useEffect(() => {
+    
+    //     axios.request({
+    //       url: url + `/book/updatebyid/${bookdetails.BOOK_ID}`,
+    //       data: ,
+    //       method: 'PUT',
+    //     }).then((response) => {
+    //     console.log(response.data)
+    //     setbookdetails(response.data);
+    //     });
+    //   }, []);
+    // }
+
+     state = {
+
+      BOOK_ID : `${bookdetails.BOOK_ID}`,
+      TITLE : `${bookdetails.TITLE}`,
+      AUTHORS: `${bookdetails.AUTHORS}`,
+      CATEGORIES: `${bookdetails.CATEGORIES}`,
+      PUBLISHER_ID: `${bookdetails.PUBLISHER_ID}`,
+      DATE_OF_PUBLISH: `${bookdetails.DATE_OF_PUBLISH}`,
+      DESCRIPTION: `${bookdetails.DESCRIPTION}`,
+      COST: `${bookdetails.COST}`,
+      ISBN: `${bookdetails.ISBN}`
+    }
+
+    //console.log('State values', state)
 
   useEffect(() => {
 
@@ -272,6 +379,9 @@ function BookInfo({book}) {
     }).then((response) => {
       //console.log('data received', response.data);
       //console.log(book.BOOK_ID)
+      //setbookdetails({...bookdetails, COST:3000})
+      //console.log('New Book Details',bookdetails)
+
       setBookCopies(response.data);
       console.log('BookCopies', BookCopies)
     });
@@ -281,7 +391,7 @@ function BookInfo({book}) {
 
     return (
     <div>
-      <h1>{book.TITLE}</h1>
+      <h1>{bookdetails.TITLE}</h1>
       <Box
         component="form"
         sx={{
@@ -293,7 +403,7 @@ function BookInfo({book}) {
         <TextField
           id="id"
           label="ID"
-          defaultValue={book.BOOK_ID}
+          defaultValue={bookdetails.BOOK_ID}
           InputProps={{
             readOnly: true,
           }}
@@ -303,36 +413,36 @@ function BookInfo({book}) {
           required
           id="title"
           label="Title"
-          defaultValue={book.TITLE}
-          //onChange={this.handleTitle}
+          defaultValue={bookdetails.TITLE}
+          onChange={handleTitle}
           variant="filled"
         />
         <TextField
           id="author"
           label="Authors"
-          defaultValue={book.AUTHORS}
+          defaultValue={bookdetails.AUTHORS}
           //onChange={this.handleAuthors}
           variant="filled"
         />
         <TextField
           id="category"
           label="Category"
-          defaultValue={book.CATEGORIES}
+          defaultValue={bookdetails.CATEGORIES}
           variant="filled"
         />
         <TextField
           id="publisher"
-          label="Publisher_id"
-          defaultValue={book.PUBLISHER_ID}
-          //onChange={this.handlePubID}
+          label="Publisher ID"
+          defaultValue={bookdetails.PUBLISHER_ID}
+          onChange={handlePubID}
           variant="filled"
         />
         <TextField
           id="date"
           //type="date"
           label="Date"
-          defaultValue={book.DATE_OF_PUBLISH}
-          //onChange={this.handleDate}
+          defaultValue= {moment(bookdetails.DATE_OF_PUBLISH).format('DD-MMM-YY')}
+          onChange={handleDate}
           variant="filled"
         />
 
@@ -340,8 +450,8 @@ function BookInfo({book}) {
           id="price"
           label="Cost"
           type="number"
-          defaultValue={book.COST}
-         // onChange={this.handleCost}
+          defaultValue={bookdetails.COST}
+          onChange={handleCost}
           // InputLabelProps={{
           //   shrink: true,
           // }}
@@ -351,7 +461,8 @@ function BookInfo({book}) {
           id="isbn"
           label="ISBN"
           contentEditable="true"
-          defaultValue={book.ISBN}
+          defaultValue={bookdetails.ISBN}
+          onChange={handleISBN}
           variant="filled"
         />
 
@@ -359,8 +470,8 @@ function BookInfo({book}) {
           id="Description"
           label="Description"
           multiline
-          defaultValue={book.DESCRIPTION}
-          //onChange={this.handleDesc}
+          defaultValue={bookdetails.DESCRIPTION}
+          onChange={handleDesc}
           variant="filled"
         />
 
@@ -458,7 +569,14 @@ function BookInfo({book}) {
             color: 'white'              
             }} 
             onClick={() => {
-              alert('Changes Saved');
+              axios.request({
+                url: url + `/book/updatebyid/${bookdetails.BOOK_ID}`,
+                data: state,
+                method: 'PUT',
+              }).then((response) => {
+              console.log(response.data)
+              setbookdetails(response.data);
+              });
             }}
             >
               Save Changes
@@ -471,6 +589,9 @@ function BookInfo({book}) {
 }
 
 export default BookInfo
+
+
+
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const response = await fetch(`http://localhost:4000/book/getAllData`)
