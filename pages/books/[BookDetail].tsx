@@ -11,7 +11,7 @@ import Grid from '@mui/material/Grid'; //https://mui.com/components/grid/
 import axios from "axios";
 
 import moment from 'moment';
-
+import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip'; //https://mui.com/components/chips/
 
 import Container from '@mui/material/Container';
@@ -70,14 +70,17 @@ const BookPage: NextPage<any, any> = function ({ bookID }) {
       {
         bookDetail ? (
           <Container maxWidth="lg">
-            <Grid container>
-              <Grid item xs={9}>
-                <Item><h1>{bookDetail.TITLE}</h1> </Item>
+            <Grid container columnSpacing={0}>
+              <Grid item xs={10}>
+                <Item><h1 className='bookDetailHeading'>{bookDetail.TITLE}</h1> </Item>
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={2}>
                 <Item>
-                  <button className="button" onClick={() => { setButtonPopup(true); issueACopy(); }}>Issue
-                  </button>
+                  <h1>
+                    <Button size="medium" variant="contained" onClick={() => { setButtonPopup(true); issueACopy(); }}>
+                      Issue
+                    </Button>
+                  </h1>
                 </Item>
               </Grid>
             </Grid>

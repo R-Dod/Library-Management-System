@@ -45,21 +45,17 @@ const FilterMultiValDataComponent = (props: any) => {
     },
     { title: 'Copy_ID', field: 'COPY_ID' },
     {
-      title: 'ISSUE_DATE', field: 'ISSUE_DATE', type: "date",
-      render: rowData => moment(rowData.DUE_DATE).format('DD-MMM-YY')
+      title: 'ISSUE_DATE', field: 'ISSUE_DATE'
     },
     {
-      title: 'DUE_DATE', field: 'DUE_DATE', type: "date",
-      render: rowData => moment(rowData.DUE_DATE).format('DD-MMM-YY')
+      title: 'DUE_DATE', field: 'DUE_DATE'
     },
     { title: 'LATE_FINE', field: 'LATE_FINE' },
     {
-      title: 'RETURN_DATE', field: 'RETURN_DATE', type: "date",
-      render: rowData => moment(rowData.DUE_DATE).format('DD-MMM-YY')
+      title: 'RETURN_DATE', field: 'RETURN_DATE'
     },
     {
-      title: 'FINE_DATE', field: 'FINE_DATE', type: "date",
-      render: rowData => moment(rowData.DUE_DATE).format('DD-MMM-YY')
+      title: 'FINE_DATE', field: 'FINE_DATE'
     },
     { title: 'AMOUNT_FINE', field: 'AMOUNT_FINE' },
     {

@@ -52,42 +52,49 @@ const Home: NextPage<any, any> = function () {
 
   return (
     <React.Fragment>
+      <Grid item xs={12}>
+        <Item>
+          <Autocomplete
+            onChange={(e: any) => {
+              console.log('event', e);
+            }}
+            freeSolo
+            id="free-solo-2-demo"
+            disableClearable
+            renderOption={(props: any, option: any) => {
+              console.log(option);
+              return (
+                <React.Fragment>
+                  <Link href={`/books/${option.BOOK_ID}`} key={option.BOOK_ID}>
+                    <li
+                      id={option.BOOK_ID}
+                      onClick={(e: any) => {
+                        console.log('event', e);
+                      }}
+                      className='searchFormatting'
+                    >{option.TITLE}</li>
+                  </Link>
+                </React.Fragment>)
+            }}
+            options={allBooks}
+            sx={{ width: 1100 }}
+            renderInput={(params) => {
+              return (
+                <TextField
+                  {...params}
+                  label="Search book title"
+                  InputProps={{
+                    ...params.InputProps,
+                    type: 'search',
+                  }}
+                />
+              )
+            }}
+          />
+        </Item>
+      </Grid>
 
-      <Autocomplete
-        onChange={(e: any) => {
-          console.log('event', e);
-        }}
-        freeSolo
-        id="free-solo-2-demo"
-        disableClearable
-        renderOption={(props: any, option: any) => {
-          console.log(props, option);
-          return <React.Fragment>
-            <TextField
-              label={option.TITLE}
-              id={option.BOOK_ID}
-            />
-          </React.Fragment>
-          //return allBooks.map((option) => option.TITLE);
-
-        }}
-        options={allBooks}
-        // .map((option) => option.TITLE)}
-        renderInput={(params) => {
-          return (
-            <TextField
-              {...params}
-              label="Search input"
-              InputProps={{
-                ...params.InputProps,
-                type: 'search',
-              }}
-            />
-          )
-        }}
-      />
-
-
+      <br />
       <Box sx={{ overflow: 'hidden' }}>
         <Grid container justifyContent="flex-start" direction="row"
           alignItems="stretch" spacing={1}>
@@ -95,7 +102,7 @@ const Home: NextPage<any, any> = function () {
           {allBooks?.map((item: any, index: number) => {
             return (
 
-              <Grid item xs={3}>
+              <Grid item xs={3} className='gridItem'>
                 <Item>
                   <Link href={`/books/${item.BOOK_ID}`} key={item.BOOK_ID}>
                     <Box key={index} sx={{ width: 210, marginRight: 0.5, my: 5 }}>
@@ -121,14 +128,14 @@ const Home: NextPage<any, any> = function () {
                           {
                             item.AUTHORS?.split(',').map((author, index) => {
                               if (author.trim().length > 0) {
-                                return <Chip variant='outlined' label={author.trim()} key={index} component="a" href="#" clickable />
+                                return <Chip variant='outlined' className='chipFontSize' label={author.trim()} key={index} component="a" href="#" clickable />
                               }
                             })
                           }
                           {
                             item.CATEGORIES?.split(',').map((category, index) => {
                               if (category.trim().length > 0) {
-                                return <Chip color="info" label={category.trim()} key={index} component="a" href="#" clickable />
+                                return <Chip color="info" className='chipFontSize' label={category.trim()} key={index} component="a" href="#" clickable />
                               }
                             })
                           }
@@ -143,63 +150,6 @@ const Home: NextPage<any, any> = function () {
                   </Link>
                 </Item>
               </Grid>
-
-            );
-          })}
-
-        </Grid>
-      </Box>
-
-      <Box sx={{ overflow: 'hidden' }}>
-        <Grid container wrap="nowrap">
-
-          {allBooks?.map((item: any, index: number) => {
-            return (
-
-              <Link href={`/books/${item.BOOK_ID}`} key={item.BOOK_ID}>
-                <Box key={index} sx={{ width: 210, marginRight: 0.5, my: 5 }}>
-                  {item ? (
-                    <Image
-                      priority
-                      src={`/images/${item.BOOK_ID}.jpg`}
-                      height={144}
-                      width={144}
-                      alt={`${item.TITLE}`}
-                    />
-                  ) : (
-                    <Skeleton variant="rectangular" width={210} height={118} />
-                  )}
-
-                  {item ? (
-
-                    <Box sx={{ pr: 2 }}>
-                      <Typography gutterBottom variant="body2">
-                        {item.TITLE}
-                      </Typography>
-
-                      {
-                        item.AUTHORS?.split(',').map((author, index) => {
-                          if (author.trim().length > 0) {
-                            return <Chip variant='outlined' label={author.trim()} key={index} component="a" href="#" clickable />
-                          }
-                        })
-                      }
-                      {
-                        item.CATEGORIES?.split(',').map((category, index) => {
-                          if (category.trim().length > 0) {
-                            return <Chip color="info" label={category.trim()} key={index} component="a" href="#" clickable />
-                          }
-                        })
-                      }
-                    </Box>
-                  ) : (
-                    <Box sx={{ pt: 0.5 }}>
-                      <Skeleton />
-                      <Skeleton width="60%" />
-                    </Box>
-                  )}
-                </Box>
-              </Link>
 
             );
           })}
