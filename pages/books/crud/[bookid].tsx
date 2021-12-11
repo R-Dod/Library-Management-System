@@ -306,7 +306,7 @@ let state = {
 
 function handleTitle(e) {
   state.TITLE = e.target.value;
-  console.log('value e', e)
+  console.log('state values', state)
 }
 
 function handlePubID(e) {
@@ -362,7 +362,7 @@ function BookInfo({book}) {
       AUTHORS: `${bookdetails.AUTHORS}`,
       CATEGORIES: `${bookdetails.CATEGORIES}`,
       PUBLISHER_ID: `${bookdetails.PUBLISHER_ID}`,
-      DATE_OF_PUBLISH: `${bookdetails.DATE_OF_PUBLISH}`,
+      DATE_OF_PUBLISH: `${moment(bookdetails.DATE_OF_PUBLISH).format('DD-MMM-YY')}`,
       DESCRIPTION: `${bookdetails.DESCRIPTION}`,
       COST: `${bookdetails.COST}`,
       ISBN: `${bookdetails.ISBN}`
@@ -569,12 +569,13 @@ function BookInfo({book}) {
             color: 'white'              
             }} 
             onClick={() => {
+              console.log('STATE TO SEND', state);
               axios.request({
                 url: url + `/book/updatebyid/${bookdetails.BOOK_ID}`,
                 data: state,
                 method: 'PUT',
               }).then((response) => {
-              console.log(response.data)
+              console.log(response)
               setbookdetails(response.data);
               });
             }}
