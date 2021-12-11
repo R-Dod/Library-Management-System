@@ -40,19 +40,9 @@ const FilterMultiValDataComponent = (props: any) => {
       field: 'RETURN_DATE',
       //field: 'RETURN_DATE', //if its not null, check the box
       editable: 'never',
-      //Edit the following code:
+
       render: (rowData: any) => <Checkbox disabled checked={rowData.RETURN_DATE ? true : false}></Checkbox>,
-      // editComponent: (props: any) => {
-      //   return (
-      //     <Checkbox
-      //       checked={props.rowData.RETURN_DATE ? true : false}
-      //     // onChange={(e) => {
-      //     //   const newRowData = { ...props.rowData, Returned: e.target.checked };
-      //     //   props.onRowDataChange(newRowData);
-      //     // }}
-      //     />
-      //   );
-      // },
+
     },
     { title: 'Accumulated late fine', field: 'LATE_FINE', editable: 'never' },
     {

@@ -3,17 +3,13 @@ import 'react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Box, Checkbox, Grid, IconButton, Tooltip } from '@material-ui/core';
 import MaterialDataTable from '../shared-components/data-table';
-import { NextPage } from 'next';
 import axios from 'axios';
-import moment from 'moment';
 
 
 const url = 'http://localhost:4000';
 
 
 const FilterMultiValDataComponent = (props: any) => {
-
-  // receive database table here
 
   const [allIssueReturns, setAllIssueReturns] = useState<any>([]);
   // receive database table here
@@ -36,12 +32,6 @@ const FilterMultiValDataComponent = (props: any) => {
       title: 'Member_ID',
       field: 'MEMBER_ID',
 
-      // cellStyle: {
-      //     maxWidth: '75ch',
-      //     whiteSpace: 'nowrap',
-      //     overflow: 'hidden',
-      //     textOverflow: 'ellipsis',
-      // },
     },
     { title: 'Copy_ID', field: 'COPY_ID' },
     {
@@ -61,20 +51,9 @@ const FilterMultiValDataComponent = (props: any) => {
     {
       title: 'Return Status',
       field: 'RETURN_DATE', //existence of return_date
-      //Edit the following code:
+
       render: (rowData: any) => <Checkbox checked={rowData.RETURN_DATE ? true : false}></Checkbox>,
-      // editComponent: (props: any) => {
-      //   console.log(props);
-      //   return (
-      //     <Checkbox
-      //       checked={props.rowData.RETURN_DATE ? true : false}
-      //       onChange={(e) => {
-      //         const newRowData = { ...props.rowData, Returned: e.target.checked };
-      //         props.onRowDataChange(newRowData);
-      //       }}
-      //     />
-      //   );
-      // },
+
     },
 
   ];
@@ -105,9 +84,7 @@ const FilterMultiValDataComponent = (props: any) => {
                   data: newAddedData,
                   method: 'POST',
                 }).then((response) => {
-                  // const dataUpdate = [...allIssueReturns];
-                  // const index = oldData.tableData.id;
-                  // dataUpdate[index] = newData;
+
                   setAllIssueReturns([...allIssueReturns, newAddedData]);
                 });
                 resolve();

@@ -1,42 +1,40 @@
-// import { NextPage } from "next";
-// import { useRouter } from 'next/router';
 import { Book, Copyright, Add } from "@material-ui/icons";
 import { GetStaticProps, GetStaticPaths } from "next";
 import * as React from 'react';
-import{ Component } from 'react'
- import Box from '@mui/material/Box';
- import TextField from '@mui/material/TextField';
- import DataTable from "../../../shared-components/data-table";
- import Button from '@mui/material/Button';
- import styles from '../../../components/layout.module.css';
- import { useState, useEffect, useCallback } from 'react';
- import axios from 'axios';
- import moment from 'moment';
- import Alert from '@mui/material/Alert';
+import { Component } from 'react'
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import DataTable from "../../../shared-components/data-table";
+import Button from '@mui/material/Button';
+import styles from '../../../components/layout.module.css';
+import { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
+import moment from 'moment';
+import Alert from '@mui/material/Alert';
 
 
- const url = 'http://localhost:4000';
+const url = 'http://localhost:4000';
 
 // // receive database table here
 
 const copies: any[] = [
   //{ field: 'sno', title: '#', type: 'number', width: 10 },
-  { field: 'COPY_ID', title: 'ID', type: 'number', width: 10 , editable: 'never'},
-  { field: 'STATUS', title: 'Status', width: 130 , editable: 'onUpdate'},
+  { field: 'COPY_ID', title: 'ID', type: 'number', width: 10, editable: 'never' },
+  { field: 'STATUS', title: 'Status', width: 130, editable: 'onUpdate' },
   { field: 'SHELF_NO', title: 'Shelf No.', width: 130 }
 ];
 
 let state = {
-      BOOK_ID : '',
-      TITLE : '',
-      AUTHORS: '',
-      CATEGORIES: '',
-      PUBLISHER_ID: '',
-      PUBLISHERNAME: '',
-      DATE_OF_PUBLISH: '',
-      DESCRIPTION: '',
-      COST: '',
-      ISBN: ''
+  BOOK_ID: '',
+  TITLE: '',
+  AUTHORS: '',
+  CATEGORIES: '',
+  PUBLISHER_ID: '',
+  PUBLISHERNAME: '',
+  DATE_OF_PUBLISH: '',
+  DESCRIPTION: '',
+  COST: '',
+  ISBN: ''
 }
 
 function handleTitle(e) {
@@ -70,26 +68,26 @@ function handleISBN(e) {
 
 
 
-function BookInfo({book}) {
-     const [bookdetails, setbookdetails] = useState<any>(book);
-     //console.log('Book Details',bookdetails)
-     const [BookCopies, setBookCopies] = useState<any>([]);
+function BookInfo({ book }) {
+  const [bookdetails, setbookdetails] = useState<any>(book);
+  //console.log('Book Details',bookdetails)
+  const [BookCopies, setBookCopies] = useState<any>([]);
 
-     state = {
+  state = {
 
-      BOOK_ID : `${bookdetails.BOOK_ID}`,
-      TITLE : `${bookdetails.TITLE}`,
-      AUTHORS: `${bookdetails.AUTHORS}`,
-      CATEGORIES: `${bookdetails.CATEGORIES}`,
-      PUBLISHER_ID: `${bookdetails.PUBLISHER_ID}`,
-      PUBLISHERNAME: `${bookdetails.PUBLISHERNAME}`,
-      DATE_OF_PUBLISH: `${moment(bookdetails.DATE_OF_PUBLISH).format('DD-MMM-YY')}`,
-      DESCRIPTION: `${bookdetails.DESCRIPTION}`,
-      COST: `${bookdetails.COST}`,
-      ISBN: `${bookdetails.ISBN}`
-    }
+    BOOK_ID: `${bookdetails.BOOK_ID}`,
+    TITLE: `${bookdetails.TITLE}`,
+    AUTHORS: `${bookdetails.AUTHORS}`,
+    CATEGORIES: `${bookdetails.CATEGORIES}`,
+    PUBLISHER_ID: `${bookdetails.PUBLISHER_ID}`,
+    PUBLISHERNAME: `${bookdetails.PUBLISHERNAME}`,
+    DATE_OF_PUBLISH: `${moment(bookdetails.DATE_OF_PUBLISH).format('DD-MMM-YY')}`,
+    DESCRIPTION: `${bookdetails.DESCRIPTION}`,
+    COST: `${bookdetails.COST}`,
+    ISBN: `${bookdetails.ISBN}`
+  }
 
-    //console.log('State values', state)
+  //console.log('State values', state)
 
   useEffect(() => {
 
@@ -107,7 +105,7 @@ function BookInfo({book}) {
 
   // setbook(book)
 
-    return (
+  return (
     <div>
       <h1>{bookdetails.TITLE}</h1>
       <Box
@@ -161,12 +159,12 @@ function BookInfo({book}) {
           label="Publisher Name"
           defaultValue={bookdetails.PUBLISHERNAME}
           variant="filled"
-        />        
+        />
         <TextField
           id="date"
           //type="date"
           label="Date"
-          defaultValue= {moment(bookdetails.DATE_OF_PUBLISH).format('DD-MMM-YY')}
+          defaultValue={moment(bookdetails.DATE_OF_PUBLISH).format('DD-MMM-YY')}
           onChange={handleDate}
           variant="filled"
         />
@@ -218,7 +216,7 @@ function BookInfo({book}) {
           data={BookCopies}
           editable={{
 
-            onRowAdd: (newAddedData) => 
+            onRowAdd: (newAddedData) =>
               new Promise<void>((resolve, reject) => {
                 setTimeout(() => {
                   axios.request({
@@ -229,16 +227,16 @@ function BookInfo({book}) {
                     console.log('response', response.data)
                     //setBookCopies(response.data);  
                     setBookCopies([...BookCopies, response.data]);
-                  });                                     
+                  });
                   resolve();
-              }, 1000);
- 
-              
+                }, 1000);
+
+
               }),
-              onRowUpdate: (newData, oldData: any) =>
+            onRowUpdate: (newData, oldData: any) =>
               new Promise<void>((resolve, reject) => {
                 setTimeout(() => {
-  
+
                   axios.request({
                     url: url + `/book/updateCopy`,
                     data: newData,
@@ -249,9 +247,9 @@ function BookInfo({book}) {
                     alert(oldData.tableData.id);
                     console.log(response.data)
                     dataUpdate[index] = newData;
-  
+
                     setBookCopies([...dataUpdate]);
-  
+
                   });
                   resolve();
                 }, 1000);
@@ -268,32 +266,30 @@ function BookInfo({book}) {
                     const dataDelete = [...BookCopies];
                     const index = oldData.tableData.id;
                     console.log(response)
-                    if(response.data == '') {
-                    dataDelete.splice(index, 1);
-                    setBookCopies([...dataDelete]);
+                    if (response.data == '') {
+                      dataDelete.splice(index, 1);
+                      setBookCopies([...dataDelete]);
                     } else {
-                    alert(response.data +"\nThe Book has been Checked out");
-                  }
+                      alert(response.data + "\nThe Book has been Checked out");
+                    }
                   });
                   resolve();
                 }, 1000);
               }),
           }}
 
-        /> 
-        &nbsp; 
-        {/* <div>
-          <Button variant='contained'>Save Changes</Button></div>&nbsp;  */}
-          <span>
-            <Button variant="contained" style={{
+        />
+        &nbsp;
+        <span>
+          <Button variant="contained" style={{
             display: 'inline-block',
             width: '100%',
             paddingTop: '2%',
             paddingBottom: '4%',
             backgroundColor: 'rgb(3, 7, 235)',
             borderRadius: '10px',
-            color: 'white'              
-            }} 
+            color: 'white'
+          }}
             onClick={() => {
               console.log('STATE TO SEND', state);
               axios.request({
@@ -301,17 +297,17 @@ function BookInfo({book}) {
                 data: state,
                 method: 'PUT',
               }).then((response) => {
-              console.log(response)
-              setbookdetails(response.data);
+                console.log(response)
+                setbookdetails(response.data);
               });
             }}
-            >
-              Save Changes
-              </Button></span>
-          </div>
+          >
+            Save Changes
+          </Button></span>
+      </div>
 
     </div>
-   )
+  )
 
 }
 
@@ -323,7 +319,7 @@ export default BookInfo
 export const getStaticPaths: GetStaticPaths = async () => {
   const response = await fetch(`http://localhost:4000/book/getAllData`)
   const data = await response.json()
-  const paths = data.map(info=>{
+  const paths = data.map(info => {
     return {
       params: {
         bookid: `${info.BOOK_ID}`
@@ -331,13 +327,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
   })
   return {
-    // paths: [
-    //   {
-    //     params: {bookid: '100'}
-    //   }
-    // ],
+
     paths,
-    fallback : false,
+    fallback: false,
   }
 }
 

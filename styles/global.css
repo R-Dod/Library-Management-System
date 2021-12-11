@@ -72,7 +72,6 @@ img {
   transition: all 0.2s ease-out;
 }
 
-/* should be in popup.css but component level css is giving error */
 .popup {
   position: fixed;
   top: 0;
@@ -167,13 +166,6 @@ button {
   border-radius: 2px;
   transition: all 0.2s ease-out;
 }
-
-/* 
-Item{
-  padding: theme.spacing(1);
-  textAlign: 'center';
-  color: theme.palette.text.secondary;
-} */
 
 .bookDetailHeading {
   text-align: left;

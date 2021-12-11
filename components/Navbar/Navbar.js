@@ -11,7 +11,6 @@ class Navbar extends Component {
         return (
             <nav className="NavbarItems">
                 <h1 className="navbar-logo">LMS</h1>
-                {/* <div className="menu-icon"> </div> */}
 
                 <ul className="nav-menu">
                     {MenuItems.map((item, index) => {

@@ -10,7 +10,6 @@ class Footer extends Component {
 
         return (
             <nav className="Footer" style={styles} >
-                {/* <div className="menu-icon"> </div> */}
 
                 <ul className="footer-menu">
                     {MenuItems.map((item, index) => {

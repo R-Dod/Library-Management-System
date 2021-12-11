@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import Head from 'next/head';
-import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
