@@ -173,7 +173,6 @@ BookPage.getInitialProps = async ({ query }) => {
   return {
     bookID: BookDetail
   }
-
 }
 
 export default BookPage;

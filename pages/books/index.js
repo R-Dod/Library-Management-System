@@ -36,8 +36,7 @@ function BookList() {
   title="All Books"
       options={{
         selection: false,
-        actionsColumnIndex: -1,
-        //detailPanelType: "single",
+        actionsColumnIndex: 0,
         paging: true,
         toolbar: true,
         search: true,

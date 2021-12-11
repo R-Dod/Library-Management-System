@@ -142,6 +142,41 @@ button {
 .chipFontSize {
   font-size: smaller;
 }
+.Footer {
+  background: linear-gradient(
+    90deg,
+    /* rgb(110, 94, 254) 0%, */ rgb(178, 210, 219) 100%,
+    /* rgba(73, 63, 252, 1) 100% */ rgb(208, 208, 211) 100%
+  );
+  height: 100px;
+  display: flex;
+  bottom: 0;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.footer-menu {
+  display: flex;
+  justify-items: center;
+  list-style: none;
+  grid-template-columns: repeat(4, auto);
+  grid-gap: 10px;
+  list-style: none;
+  text-align: center;
+}
+
+.footer-links {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+}
+
+.footer-links:hover {
+  background-color: #a3e9e5e5;
+  border-radius: 2px;
+  transition: all 0.2s ease-out;
+}
 
 /* 
 Item{
