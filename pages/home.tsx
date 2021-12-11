@@ -5,7 +5,7 @@ import { Grid } from '@material-ui/core';
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
 
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import axios from 'axios';
 import Image from 'next/image';
@@ -14,6 +14,10 @@ import Chip from '@mui/material/Chip';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
+
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+
 
 const url = 'http://localhost:4000';
 
@@ -40,8 +44,49 @@ const Home: NextPage<any, any> = function () {
     });
   }, []);
 
+  const [input, setInput] = useState("");
+
+  const getInput = (event, val) => {
+    setInput(val);
+  }
+
   return (
     <React.Fragment>
+
+      <Autocomplete
+        onChange={(e: any) => {
+          console.log('event', e);
+        }}
+        freeSolo
+        id="free-solo-2-demo"
+        disableClearable
+        renderOption={(props: any, option: any) => {
+          console.log(props, option);
+          return <React.Fragment>
+            <TextField
+              label={option.TITLE}
+              id={option.BOOK_ID}
+            />
+          </React.Fragment>
+          //return allBooks.map((option) => option.TITLE);
+
+        }}
+        options={allBooks}
+        // .map((option) => option.TITLE)}
+        renderInput={(params) => {
+          return (
+            <TextField
+              {...params}
+              label="Search input"
+              InputProps={{
+                ...params.InputProps,
+                type: 'search',
+              }}
+            />
+          )
+        }}
+      />
+
 
       <Box sx={{ overflow: 'hidden' }}>
         <Grid container justifyContent="flex-start" direction="row"

@@ -70,9 +70,15 @@ const BookPage: NextPage<any, any> = function ({ bookID }) {
       {
         bookDetail ? (
           <Container maxWidth="lg">
-            <Grid>
-              <Grid item xs={12}>
+            <Grid container>
+              <Grid item xs={9}>
                 <Item><h1>{bookDetail.TITLE}</h1> </Item>
+              </Grid>
+              <Grid item xs={3}>
+                <Item>
+                  <button className="button" onClick={() => { setButtonPopup(true); issueACopy(); }}>Issue
+                  </button>
+                </Item>
               </Grid>
             </Grid>
             <Grid container rowSpacing={1}>
@@ -121,7 +127,7 @@ const BookPage: NextPage<any, any> = function ({ bookID }) {
                     <Grid item xs={4}><Item className="textAlignLeft">ISBN </Item></Grid>
                     <Grid item xs={8}><Item className="textAlignLeft"> {bookDetail.ISBN}</Item></Grid>
                     <Grid item xs={4}><Item className="textAlignLeft">Published By </Item></Grid>
-                    <Grid item xs={8}><Item className="textAlignLeft"> {bookDetail.PUBLISHER_ID} </Item></Grid>
+                    <Grid item xs={8}><Item className="textAlignLeft"> {bookDetail.PUBLISHERNAME} </Item></Grid>
                     <Grid item xs={4}><Item className="textAlignLeft">Published On </Item></Grid>
                     <Grid item xs={8}><Item className="textAlignLeft"> {moment(bookDetail.DATE_OF_PUBLISH).format('DD-MMM-YY')}</Item></Grid>
                   </Grid>
@@ -131,20 +137,22 @@ const BookPage: NextPage<any, any> = function ({ bookID }) {
             <Grid item xs={12} >
               <Item className="bookDescription">
                 Description: {bookDetail.DESCRIPTION}
-                However, until now, books on wealth creation have overlooked the powerful forces available inside
-                each of us that we can harness and direct in order to manifest the abundance we desire and
-                deserve. This fascinating book clearly explains time-tested principles for creating wealth,
-                providing guidance on how to alter our behaviors and emotions to actually change the nature
-                of our relationship with the powerful stream of abundance that we can tap into at any time.
-                As Peggy McColl explains, we can actually transform our energy vibration and send a clear
-                message to the universe that we're ready to claim our financial birthright.
-                And, best of all, the universe's response to the modifications we make internally
-                can be startlingly quick! It's not enough, though, to simply understand what sets apart
-                those who are already enjoying a rich and plentiful life from those who are weighed down
-                by a feeling of lack. Peggy offers practical advice on how to apply the 21 Distinctions
-                of Wealth and become a money magnet
               </Item>
             </Grid>
+            <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+              <h3> Book Issued! </h3>
+              {(bookDetail.AVAILABLECOPIES > 0) ?
+                <p>
+                  Please collect the book from us at the earliest.
+                  The due date for returning the book is "within 2 weeks" !
+                </p>
+                :
+                <p>
+                  No copies of the book available. Please check again later.
+                </p>
+
+              }
+            </Popup>
           </Container>
         ) : (
           <p> Book not found </p>
