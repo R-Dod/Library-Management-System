@@ -7,8 +7,16 @@ import Image from 'next/image'
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid'; //https://mui.com/components/grid/
 import axios from "axios";
+
+import moment from 'moment';
+
+import Chip from '@mui/material/Chip'; //https://mui.com/components/chips/
+
+import Container from '@mui/material/Container';
+
+
 import React, { useEffect, useState } from 'react';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -61,38 +69,152 @@ const BookPage: NextPage<any, any> = function ({ bookID }) {
     <>
       {
         bookDetail ? (
-          <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={2} />
-              <Grid item xs={8}>
-                <Grid item xs={4}>
-                  <Item> <h1 >{bookDetail.TITLE}</h1></Item>
-                </Grid>
-                <Grid item xs={4}>
+          <Container maxWidth="lg">
+            <Grid container>
+              <Grid item xs={9}>
+                <Item><h1>{bookDetail.TITLE}</h1> </Item>
+              </Grid>
+              <Grid item xs={3}>
+                <Item>
+                  <button className="button" onClick={() => { setButtonPopup(true); issueACopy(); }}>Issue
+                  </button>
+                </Item>
+              </Grid>
+            </Grid>
+            <Grid container rowSpacing={1}>
+              <Grid item xs={5}>
+                <Item>
                   <Image
                     priority
                     src={`/images/${bookDetail.BOOK_ID}.jpg`}
-                    height={144}
-                    width={144}
+                    height={300}
+                    width={300}
                     alt={`${bookDetail.id}`}
                   />
+                </Item>
+              </Grid>
+              <Grid item xs={7} container>
+                <Item>
+                  <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                    <Grid item xs={4}><Item className="textAlignLeft">By: </Item></Grid>
+                    <Grid item xs={8}>
+                      <Item className="textAlignLeft">
+                        {
+                          bookDetail.AUTHORS?.split(',').map((author, index) => {
+                            if (author.trim().length > 0) {
+                              return <Chip variant='outlined' label={author.trim()} key={index} component="a" href="#" clickable />
+                            }
+                          })
+                        }
+                      </Item>
+                    </Grid>
+                    <Grid item xs={4}><Item className="textAlignLeft">Genre: </Item></Grid>
+                    <Grid item xs={8}>
+                      <Item className="textAlignLeft">
+                        {
+                          bookDetail.CATEGORIES?.split(',').map((category, index) => {
+                            if (category.trim().length > 0) {
+                              return <Chip color="info" label={category.trim()} key={index} component="a" href="#" clickable />
+                            }
+                          })
+                        }
+                      </Item>
+                    </Grid>
+                    <Grid item xs={4}><Item className="textAlignLeft">Original Cost: </Item></Grid>
+                    <Grid item xs={8}>
+                      <Item className='booKPrice textAlignLeft'> Rs. {bookDetail.COST}</Item>
+                    </Grid>
+                    <Grid item xs={4}><Item className="textAlignLeft">ISBN </Item></Grid>
+                    <Grid item xs={8}><Item className="textAlignLeft"> {bookDetail.ISBN}</Item></Grid>
+                    <Grid item xs={4}><Item className="textAlignLeft">Published By </Item></Grid>
+                    <Grid item xs={8}><Item className="textAlignLeft"> {bookDetail.PUBLISHERNAME} </Item></Grid>
+                    <Grid item xs={4}><Item className="textAlignLeft">Published On </Item></Grid>
+                    <Grid item xs={8}><Item className="textAlignLeft"> {moment(bookDetail.DATE_OF_PUBLISH).format('DD-MMM-YY')}</Item></Grid>
+                  </Grid>
+                </Item>
+              </Grid>
+            </Grid>
+            <Grid item xs={12} >
+              <Item className="bookDescription">
+                Description: {bookDetail.DESCRIPTION}
+              </Item>
+            </Grid>
+            <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+              <h3> Book Issued! </h3>
+              {(bookDetail.AVAILABLECOPIES > 0) ?
+                <p>
+                  Please collect the book from us at the earliest.
+                  The due date for returning the book is "within 2 weeks" !
+                </p>
+                :
+                <p>
+                  No copies of the book available. Please check again later.
+                </p>
+
+              }
+            </Popup>
+          </Container>
+        ) : (
+          <p> Book not found </p>
+        )
+      }
+      {/* {
+
+        bookDetail ? (
+          <Box sx={{ flexGrow: 1 }}>
+            <Grid container>
+              <Grid item xs={12}>
+                <Grid item xs={12}>
+                  <Item> <h1>{bookDetail.TITLE}</h1></Item>
                 </Grid>
-                <Grid item xs={4}>
-                  <h3> Author: {bookDetail.AUTHORS} </h3>
+                <Grid item xs={12}>
+                  <Item>
+                    <Image
+                      priority
+                      src={`/images/${bookDetail.BOOK_ID}.jpg`}
+                      height={300}
+                      width={300}
+                      alt={`${bookDetail.id}`}
+                    />
+                  </Item>
                 </Grid>
-                <Grid item xs={4}>
-                  <h4>Category: {bookDetail.CATEGORIES}</h4>
+                <Grid item xs={12}>
+                  <Item>  <h3> Author: </h3>
+                    <Chip label={bookDetail.AUTHORS} component="a" href="#basic-chip" clickable />
+                  </Item>
                 </Grid>
-                <h5>
-                  Publisher: {bookDetail.PUBLISHER_ID} <br />
-                  Published on: {bookDetail.DATE_OF_PUBLISH}<br />
-                  <br />
-                  Description: {bookDetail.DESCRIPTION}<br />
-                  <br />
-                  Original Cost: {bookDetail.COST}<br />
-                  ISBN: {bookDetail.ISBN}<br />
-                </h5>
-                <button className="button" onClick={() => { setButtonPopup(true); issueACopy(); }}>Issue</button>
+                <Grid item xs={12}>
+                  <Item>  <h4>Category: </h4>
+                    <Chip label={bookDetail.CATEGORIES} component="a" href="#basic-chip" clickable />
+                  </Item>
+                </Grid>
+                <Grid item xs={12}>
+                  <Item>
+                    <h5>
+                      Publisher: {bookDetail.PUBLISHER_ID} <br />
+                      Published on: {bookDetail.DATE_OF_PUBLISH}<br />
+                      <br />
+                    </h5>
+                  </Item>
+                </Grid>
+                <Grid item xs={12}>
+                  <Item>
+                    Description: {bookDetail.DESCRIPTION}<br />
+                    <br />
+                  </Item>
+                </Grid>
+                <Grid item xs={12}>
+                  <Item>
+                    Original Cost: {bookDetail.COST}<br />
+                    ISBN: {bookDetail.ISBN}<br />
+                  </Item>
+                </Grid>
+                <Grid item xs={12}>
+                  <Item>
+                    <button className="button" onClick={() => { setButtonPopup(true); issueACopy(); }}>Issue
+                    </button>
+                  </Item>
+                </Grid>
                 <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
                   <h3> Book Issued! </h3>
                   {(bookDetail.AVAILABLECOPIES > 0) ?
@@ -108,13 +230,11 @@ const BookPage: NextPage<any, any> = function ({ bookID }) {
                   }
                 </Popup>
               </Grid>
-
-              <Grid item xs={2} />
             </Grid>
           </Box>
         )
           : (<p> No Book Found </p>)
-      }
+      } */}
 
     </>
   );
