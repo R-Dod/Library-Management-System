@@ -5,7 +5,7 @@ import MaterialDataTable from '../shared-components/data-table';
 import React, { useCallback, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import axios from 'axios';
-import moment from 'moment';
+import moment from 'moment'; //https://momentjscom.readthedocs.io/en/latest/moment/00-use-it/01-node-js/
 
 const url = 'http://localhost:4000';
 const user = { user_name: 'Ali Hasan', user_id: '101' };

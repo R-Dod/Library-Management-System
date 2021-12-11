@@ -110,6 +110,19 @@ button {
   color: blue;
 }
 
+.booKPrice {
+  font-weight: 900;
+}
+
+.bookDescription {
+  text-align: justify;
+  font-style: italic;
+}
+
+.textAlignLeft {
+  text-align: left;
+}
+
 /* 
 Item{
   padding: theme.spacing(1);
