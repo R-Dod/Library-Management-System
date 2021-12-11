@@ -45,7 +45,7 @@ function memberlist() {
         options={{
           exportButton: false,
           draggable: false,
-          actionsColumnIndex: -1,
+          actionsColumnIndex: 0,
           search: true,
         }}
         title={'Members'}

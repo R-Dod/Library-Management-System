@@ -1,23 +1,29 @@
-import { ClassNames } from '@emotion/react';
 import React,{Component} from 'react';
+import styles from './layout.module.css'
 import { MenuItems } from './MenuItems';
-class Header extends Component{
+class Footer extends Component{
+
+    
     render(){
+
+        var user = { user_name: 'Admin', user_id: '101', role: 'user' };
+
         return(
-            <nav className="NavbarItems">
-            <h1 className="navbar-logo">LMS</h1>
+            <nav className="Footer" style={styles} >
             {/* <div className="menu-icon"> </div> */}
             
-            <ul className="nav-menu">
+            <ul className="footer-menu">
                 {MenuItems.map((item,index)=>{
-                    return (
-                        <li className="nav-links" key={index}>
+                    return (item.role == user.role || item.role == 'generic') ?
+   
+                        <li className="footer-links" key={index}>
                             <a className={MenuItems.cName} href={item.url} >
                               {item.title}
                             
                             </a>
                         </li>
-                    )
+                    
+                    : <></>
                 })
                 }
                 
@@ -27,4 +33,4 @@ class Header extends Component{
         )
     }
 }
-export default Header
+export default Footer

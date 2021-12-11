@@ -12,278 +12,12 @@ import{ Component } from 'react'
  import { useState, useEffect, useCallback } from 'react';
  import axios from 'axios';
  import moment from 'moment';
+ import Alert from '@mui/material/Alert';
 
 
  const url = 'http://localhost:4000';
 
 // // receive database table here
-
-
-
-
-// const rows: any = [
-//   {
-//     sno: 1,
-//     id: 100,
-//     status: 'Checked Out',
-//     ShelfNo: '234'
-//   },
-//   {
-//     sno: 2,
-//     id: 101,
-//     status: 'Available',
-//     ShelfNo: '345'
-//   },
-//   {
-//     sno: 3,
-//     id: 102,
-//     status: 'Checked Out',
-//     ShelfNo: '2340'
-//   },
-//   {
-//     sno: 4,
-//     id: 103,
-//     status: 'Available',
-//     ShelfNo: '3450'
-//   },
-//   {
-//     sno: 5,
-//     id: 104,
-//     status: 'Checked Out',
-//     ShelfNo: '2341'
-//   },
-//   {
-//     sno: 6,
-//     id: 105,
-//     status: 'Available',
-//     ShelfNo: '3451'
-//   },
-// ];
-
-// const BookDataPage: NextPage<any, any> = function () {
-//   const router = useRouter();
-//   const bookID = router.query.bookid;
-//   //console.log(BookID)
- //  const [BookCopies, setBookCopies] = useState<any>(rows);
-//   const [BookInfo, setBookInfo] = useState<any>([]);
-
-//   useEffect(() => {
-
-//     axios.request({
-//       url: url + `/book/getbyid?id=${bookID}`,
-
-//       method: 'GET',
-//     }).then((response) => {
-//       console.log('data received', response.data);
-//       //console.log(response.data)
-//       setBookInfo(response.data);
-//     });
-//   }, []);
-
-//   return (
-//     <div>
-//       <h1>{BookInfo.TITLE}</h1>
-//       <Box
-//         component="form"
-//         sx={{
-//           '& .MuiTextField-root': { m: 1, width: '100%' },
-//         }}
-//         noValidate
-//         autoComplete="off"
-//       >
-//         <TextField
-//           id="id"
-//           label="ID"
-//     ={BookInfo.Book_ID}
-//           InputProps={{
-//             readOnly: true,
-//           }}
-//           variant="standard"
-//         />
-//         <h1> <TextField
-//           required
-//           id="title"
-//           label="Title"
-//     ={BookInfo.TITLE}
-//           variant="standard"
-//         /></h1>
-//         <TextField
-//           id="author"
-//           label="Authors"
-//     ={BookInfo.AUTHORS}
-//           variant="standard"
-//         />
-//         <TextField
-//           id="category"
-//           label="Category"
-//     ={BookInfo.CATEGORIES}
-//           variant="standard"
-//         />
-//         <TextField
-//           id="publisher"
-//           label="Publisher"
-//     ={BookInfo.PUBLISHER_ID}
-//           variant="standard"
-//         />
-//         <TextField
-//           id="date"
-//           //type="date"
-//           label="Date"
-//     ={BookInfo.DATE_OF_PUBLISH}
-//           variant="standard"
-//         />
-
-//         <TextField
-//           id="price"
-//           label="Cost"
-//           type="number"
-//     ={BookInfo.COST}
-//           InputLabelProps={{
-//             shrink: true,
-//           }}
-//           variant="standard"
-//         />
-//         <TextField
-//           id="isbn"
-//           label="ISBN"
-//     ={BookInfo.ISBN}
-//           variant="standard"
-//         />
-
-//         <TextField
-//           id="standard-multiline-static"
-//           label="Description"
-//           multiline
-//     ={BookInfo.DESCRIPTION}
-//           variant="standard"
-//         />
-
-//       </Box>
-
-//       <div style={{ height: 400, width: '100%' }}>
-//         <DataTable
-//           options={{
-//             showSelectAllCheckbox: false,
-//             selection: false,
-//             exportButton: false,
-//             draggable: false,
-//             search: false,
-//             paging: false
-//           }}
-//           title={'All Copies'}
-//           columns={copies}
-//           data={BookCopies}
-//           editable={{
-//             onRowAdd: (newAddedData) =>
-//               new Promise<void>((resolve, reject) => {
-//                 setTimeout(() => {
-//                   setBookCopies([...rows, newAddedData]);
-//                   resolve();
-//                 }, 1000);
-//               }),
-//             onRowUpdate: (newData, oldData: any) =>
-//               new Promise<void>((resolve, reject) => {
-//                 setTimeout(() => {
-
-//                   const dataUpdate = [...BookCopies];
-//                   const index = oldData.tableData.id;
-//                   dataUpdate[index] = newData;
-
-//                   setBookCopies([...dataUpdate]);
-
-//                   resolve();
-//                 }, 1000);
-//               }),
-//             onRowDelete: (oldData: any) =>
-//               new Promise<void>((resolve, reject) => {
-//                 setTimeout(() => {
-
-//                   const dataDelete = [...BookCopies];
-//                   const index = oldData.tableData.id;
-//                   dataDelete.splice(index, 1);
-//                   setBookCopies([...dataDelete]);
-
-//                   resolve();
-//                 }, 1000);
-//               }),
-//           }}
-
-//         />&nbsp; <div>
-//           <Button className={styles.button}>Save Changes</Button></div>&nbsp; </div>
-
-//     </div>
-//   )
-
-// };
-
-// export default BookDataPage
-
-
-// // export const getStaticProps: GetStaticProps = async (context) => {
-// //   const { params } = context
-// //   const response = await fetch(`http://localhost:4000/book/getbyid?id=${params.Book_ID}`)
-// //   console.log(params)
-// //   const data = await response.json()
-// //   return {
-// //     props: {
-// //       BookInfo: data
-// //     },
-// //   }
-// // }
-
-// // export const getStaticPaths: GetStaticPaths = async () => {
-// //   const response = await fetch(`http://localhost:4000/book/getAllData`)
-// //   //console.log(response)
-// //   const data = await response.json()
-
-// //   const paths = data.map((book) => {
-// //     return {
-// //       params: {
-// //         bookid: `${book.Book_ID}`,
-// //       }
-// //     }
-// //   })
-
-// //   return {
-// //     paths,
-// //     fallback: false
-// //   }
-// // }
-
-
-// class BookPage extends Component {
-//   constructor(props) {
-//     super(props)
-//     const [bookdetails, setbookdetails] = useState<any>(book);
-
-//     useEffect(() => {
-
-//       axios.request({
-//         url: url + `http://localhost:4000/book/getbyid?id=${book.BOOK_ID}`,
-//         method: 'GET',
-//       }).then((response) => {
-//         //console.log('data received', response.data);
-//         //console.log(book.BOOK_ID)
-//         setbookdetails(response.data);
-//         console.log('BookCopies', BookCopies)
-//       });
-//     }, []);
-//     this.state = {
-
-//       BOOK_ID : `${bookdetails.BOOK_ID}`,
-//       TITLE : `${bookdetails.TITLE}`,
-//       AUTHORS: `${bookdetails.AUTHORS}`,
-//       CATEGORIES: `${bookdetails.CATEGORIES}`,
-//       PUBLISHER_ID: `${bookdetails.PUBLISHER_ID}`,
-//       DATE_OF_PUBLISH: `${bookdetails.DATE_OF_PUBLISH}`,
-//       DESCRIPTION: `${bookdetails.DESCRIPTION}`,
-//       COST: `${bookdetails.COST}`,
-//       ISBN: `${bookdetails.ISBN}`      
-
-//     }
-//   }
-// }
-
 
 const copies: any[] = [
   //{ field: 'sno', title: '#', type: 'number', width: 10 },
@@ -298,6 +32,7 @@ let state = {
       AUTHORS: '',
       CATEGORIES: '',
       PUBLISHER_ID: '',
+      PUBLISHERNAME: '',
       DATE_OF_PUBLISH: '',
       DESCRIPTION: '',
       COST: '',
@@ -335,25 +70,10 @@ function handleISBN(e) {
 
 
 
-
 function BookInfo({book}) {
      const [bookdetails, setbookdetails] = useState<any>(book);
      //console.log('Book Details',bookdetails)
      const [BookCopies, setBookCopies] = useState<any>([]);
-
-    //  function UpdateBookDetails() {
-    //   useEffect(() => {
-    
-    //     axios.request({
-    //       url: url + `/book/updatebyid/${bookdetails.BOOK_ID}`,
-    //       data: ,
-    //       method: 'PUT',
-    //     }).then((response) => {
-    //     console.log(response.data)
-    //     setbookdetails(response.data);
-    //     });
-    //   }, []);
-    // }
 
      state = {
 
@@ -362,6 +82,7 @@ function BookInfo({book}) {
       AUTHORS: `${bookdetails.AUTHORS}`,
       CATEGORIES: `${bookdetails.CATEGORIES}`,
       PUBLISHER_ID: `${bookdetails.PUBLISHER_ID}`,
+      PUBLISHERNAME: `${bookdetails.PUBLISHERNAME}`,
       DATE_OF_PUBLISH: `${moment(bookdetails.DATE_OF_PUBLISH).format('DD-MMM-YY')}`,
       DESCRIPTION: `${bookdetails.DESCRIPTION}`,
       COST: `${bookdetails.COST}`,
@@ -377,12 +98,9 @@ function BookInfo({book}) {
 
       method: 'GET',
     }).then((response) => {
-      //console.log('data received', response.data);
-      //console.log(book.BOOK_ID)
-      //setbookdetails({...bookdetails, COST:3000})
-      //console.log('New Book Details',bookdetails)
 
       setBookCopies(response.data);
+      console.log('BookDetails', bookdetails)
       console.log('BookCopies', BookCopies)
     });
   }, []);
@@ -431,12 +149,19 @@ function BookInfo({book}) {
           variant="filled"
         />
         <TextField
-          id="publisher"
+          id="publisherID"
           label="Publisher ID"
           defaultValue={bookdetails.PUBLISHER_ID}
           onChange={handlePubID}
           variant="filled"
         />
+        <TextField
+          id="publishername"
+          disabled
+          label="Publisher Name"
+          defaultValue={bookdetails.PUBLISHERNAME}
+          variant="filled"
+        />        
         <TextField
           id="date"
           //type="date"
@@ -483,6 +208,7 @@ function BookInfo({book}) {
             showSelectAllCheckbox: false,
             selection: false,
             exportButton: false,
+            actionsColumnIndex: 0,
             draggable: false,
             search: false,
             paging: false
