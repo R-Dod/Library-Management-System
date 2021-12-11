@@ -31,103 +31,105 @@ function BookList() {
 
   return (
     <>
-    <h1>Home Page</h1>
+      <h1>Home Page</h1>
       <MaterialDataTable
-  title="All Books"
-      options={{
-        selection: false,
-        actionsColumnIndex: 0,
-        paging: true,
-        toolbar: true,
-        search: true,
-        exportButton: false,
-        exportAllData: false,
+        title="All Books"
+        options={{
+          selection: false,
+          actionsColumnIndex: 0,
+          paging: true,
+          toolbar: true,
+          search: true,
+          exportButton: false,
+          exportAllData: false,
 
-        headerStyle: {
-          font: 'Proxima Nova',
-          fontSize: '18px',
-          lineHeight: '20px',
-        },
-        rowStyle: (x) => {
-          const styles = {
+          headerStyle: {
             font: 'Proxima Nova',
-            fontSize: '15px',
-            lineHeight: '65px',
-            color: '#020A20',
-            background: '',
-          };
+            fontSize: '18px',
+            lineHeight: '20px',
+          },
+          rowStyle: (x) => {
+            const styles = {
+              font: 'Proxima Nova',
+              fontSize: '15px',
+              lineHeight: '65px',
+              color: '#020A20',
+              background: '',
+            };
 
-          return styles;
-        },
-      }}
-     columns={
-        [
-            { field: 'BOOK_ID', title: 'ID', type:'number', width: 10, editable: 'never',
-            render: rowData => <a href={`books/crud/${rowData.BOOK_ID}`}>{rowData.BOOK_ID}</a>},
+            return styles;
+          },
+        }}
+        columns={
+          [
+            {
+              field: 'BOOK_ID', title: 'ID', type: 'number', width: 10, editable: 'never',
+              render: rowData => <a href={`books/crud/${rowData.BOOK_ID}`}>{rowData.BOOK_ID}</a>
+            },
             { field: 'TITLE', title: 'Title', width: 130 },
             { field: 'AUTHORS', title: 'Author', width: 130 },
-            { field: 'CATEGORIES', title: 'Category',  width: 130 },
+            { field: 'CATEGORIES', title: 'Category', width: 130 },
             { field: 'PUBLISHER_ID', title: 'Publisher', width: 130 },
-            { field: 'DATE_OF_PUBLISH', title: 'Published On',type:'number', width: 10,
-            render: rowData => moment(rowData.DATE_OF_PUBLISH).format('DD-MMM-YY')
-          },
+            {
+              field: 'DATE_OF_PUBLISH', title: 'Published On', width: 10,
+            },
             { field: 'ISBN', title: 'ISBN', width: 10 }
-        ]
-     }
-     data={Allbooks}
-     editable={{
-        onRowAdd: (newAddedData) =>
-          new Promise((resolve, reject) => {
-            setTimeout(() => {
-              axios.request({
-                url: url + `/book/insert`,
-                data: newAddedData,
-                method: 'POST',
-              }).then((response) => {
-                console.log('newAddedData',newAddedData)
-                //setBookCopies(response.data);  
-                setAllBooks([...Allbooks, newAddedData]);
-              });                
+          ]
+        }
+        data={Allbooks}
+        editable={{
+          onRowAdd: (newAddedData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                axios.request({
+                  url: url + `/book/insert`,
+                  data: newAddedData,
+                  method: 'POST',
+                }).then((response) => {
+                  console.log('newAddedData', newAddedData)
+                  //setBookCopies(response.data);  
+                  setAllBooks([...Allbooks, newAddedData]);
+                });
                 //setIssueHistory([...issueHistory, newAddedData]);
-              resolve();
-            }, 1000);
-          }),
-        // onRowUpdate: (newData, oldData) =>
-        //   new Promise((resolve, reject) => {
-        //     setTimeout(() => {
+                resolve();
+              }, 1000);
+            }),
+          // onRowUpdate: (newData, oldData) =>
+          //   new Promise((resolve, reject) => {
+          //     setTimeout(() => {
 
-        //         const dataUpdate = [...issueHistory];
-        //         const index = oldData.tableData.id;
-        //         dataUpdate[index] = newData;
+          //         const dataUpdate = [...issueHistory];
+          //         const index = oldData.tableData.id;
+          //         dataUpdate[index] = newData;
 
-        //         setIssueHistory([...dataUpdate]);
+          //         setIssueHistory([...dataUpdate]);
 
-        //       resolve();
-        //     }, 1000);
-        //   }),
-        onRowDelete: (oldData) =>
-          new Promise((resolve, reject) => {
-            setTimeout(() => {
+          //       resolve();
+          //     }, 1000);
+          //   }),
+          onRowDelete: (oldData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
 
-              axios.request({
-                url: url + `/book/deletebyid/${oldData.BOOK_ID}`,
-                //data: { id: oldData.ISSUE_ID },
-                method: 'DELETE',
-              }).then((response) => {
-                console.log(response.data)
-                const dataDelete = [...Allbooks];
-                const index = oldData.tableData.id;
-                dataDelete.splice(index, 1);
-                setAllBooks([...dataDelete]);
-              });
+                axios.request({
+                  url: url + `/book/deletebyid/${oldData.BOOK_ID}`,
+                  //data: { id: oldData.ISSUE_ID },
+                  method: 'DELETE',
+                }).then((response) => {
+                  console.log(response.data)
+                  const dataDelete = [...Allbooks];
+                  const index = oldData.tableData.id;
+                  dataDelete.splice(index, 1);
+                  setAllBooks([...dataDelete]);
+                });
 
-              resolve();
-            }, 1000);
-          }),
-      }}
->
+                resolve();
+              }, 1000);
+            }),
+        }}
+      >
 
- </MaterialDataTable>
+      </MaterialDataTable>
       {/* <h1>Home Page</h1>
       <TableContainer component={Paper}>
         <Table aria-label="simple table">

@@ -1,6 +1,6 @@
 import '../styles/global.css'
 import Navbar from '../components/Navbar/Navbar';
-import Footer from '../components/Footer/Footer'
+import Footer from '../components/Footer/Footer';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
