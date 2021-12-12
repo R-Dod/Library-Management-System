@@ -44,7 +44,7 @@ const FilterMultiValDataComponent = (props: any) => {
           padding: 'dense',
           search: true,
         }}
-        title={'Your Issue History'}
+        title={'Authors'}
         data={allAuthors}
         columns={columnDefs}
         singleSelect={true}
