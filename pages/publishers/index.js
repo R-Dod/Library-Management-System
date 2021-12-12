@@ -8,19 +8,19 @@ import moment from 'moment';
 const url = 'http://localhost:4000';
 
 
-function AuthorList() {
+function PublisherList() {
 
-  const [allAuthors, setAllAuthors] = useState([]);
+  const [allPublishers, setAllPublishers] = useState([]);
   // receive database table here
 
   useEffect(() => {
 
     axios.request({
-      url: url + '/author/getall',
+      url: url + '/publisher/getall',
       method: 'GET',
     }).then((response) => {
       console.log(response.data);
-      setAllAuthors(response.data);
+      setAllPublishers(response.data);
     });
   }, []);
 
@@ -28,7 +28,7 @@ function AuthorList() {
     <>
       <h1>Home Page</h1>
       <MaterialDataTable
-        title="All Authors"
+        title="All Publishers"
         options={{
           selection: false,
           actionsColumnIndex: 0,
@@ -58,27 +58,28 @@ function AuthorList() {
         columns={
           [
             {
-              field: 'AUTHOR_ID', title: 'ID', type: 'number', width: 10, editable: 'never',
-              render: rowData => <a href={`authors/crud/${rowData.AUTHOR_ID}`}>{rowData.AUTHOR_ID}</a>
+              title: 'ID', field: 'PUBLISHER_ID', type: 'number', width: 10, editable: 'never',
+              render: rowData => <a href={`publishers/crud/${rowData.PUBLISHER_ID}`}>{rowData.PUBLISHER_ID}</a>
             },
-            { field: 'FIRST_NAME', title: 'First Name', width: 130 },
-            { field: 'LAST_NAME', title: 'Last Name', width: 130 },
-            { field: 'EMAIL', title: 'Email', width: 130 },
+            { title: 'Name', field: 'NAME', width: 130 },
+            { title: 'Address', field: 'ADDRESS', width: 130 },
+            { title: 'Email', field: 'EMAIL', width: 130 },
+            { title: 'Phone Number', field: 'PHONE_NO', width: 130 },
           ]
         }
-        data={allAuthors}
+        data={allPublishers}
         editable={{
           onRowAdd: (newAddedData) =>
             new Promise((resolve, reject) => {
               setTimeout(() => {
                 axios.request({
-                  url: url + `/author/insert`,
+                  url: url + `/publisher/insert`,
                   data: newAddedData,
                   method: 'POST',
                 }).then((response) => {
                   console.log('newAddedData', newAddedData)
 
-                  setAllAuthors([...allAuthors, newAddedData]);
+                  setAllPublishers([...allPublishers, newAddedData]);
                 });
 
                 resolve();
@@ -90,15 +91,15 @@ function AuthorList() {
               setTimeout(() => {
 
                 axios.request({
-                  url: url + `/author/deletebyid/${oldData.AUTHOR_ID}`,
+                  url: url + `/publisher/deletebyid/${oldData.PUBLISHER_ID}`,
 
                   method: 'DELETE',
                 }).then((response) => {
                   console.log(response.data)
-                  const dataDelete = [...allAuthors];
+                  const dataDelete = [...allPublishers];
                   const index = oldData.tableData.id;
                   dataDelete.splice(index, 1);
-                  setAllAuthors([...dataDelete]);
+                  setAllPublishers([...dataDelete]);
                 });
 
                 resolve();
@@ -113,5 +114,5 @@ function AuthorList() {
   )
 }
 
-export default AuthorList
+export default PublisherList
 

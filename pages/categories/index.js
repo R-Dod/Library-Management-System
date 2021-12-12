@@ -59,7 +59,7 @@ function AuthorList() {
           [
             {
               title: 'ID', field: 'CATEGORY_ID', type: 'number', width: 10, editable: 'never',
-              render: rowData => <a href={`category/crud/${rowData.CATEGORY_ID}`}>{rowData.CATEGORY_ID}</a>
+              render: rowData => <a href={`categories/crud/${rowData.CATEGORY_ID}`}>{rowData.CATEGORY_ID}</a>
             },
             { title: 'Name', field: 'CATEGORY_NAME', width: 130 },
             { title: 'Description', field: 'CAT_DESC', width: 130 },
