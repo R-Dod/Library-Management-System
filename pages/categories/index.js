@@ -59,7 +59,7 @@ function AuthorList() {
           [
             {
               title: 'ID', field: 'CATEGORY_ID', type: 'number', width: 10, editable: 'never',
-              render: rowData => <a href={`categories/crud/${rowData.CATEGORY_ID}`}>{rowData.CATEGORY_ID}</a>
+              // render: rowData => <a href={`categories/crud/${rowData.CATEGORY_ID}`}>{rowData.CATEGORY_ID}</a>
             },
             { title: 'Name', field: 'CATEGORY_NAME', width: 130 },
             { title: 'Description', field: 'CAT_DESC', width: 130 },
@@ -100,6 +100,25 @@ function AuthorList() {
                   setAllCategories([...dataDelete]);
                 });
 
+                resolve();
+              }, 1000);
+            }),
+
+            onRowUpdate: (newData, oldData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                axios.request({
+                  url: url + `/category/updatebyid/${oldData.CATEGORY_ID}`,
+                  data: newData,
+                  method: 'PUT',
+                }).then((response) => {
+                  const dataUpdate = [...allCategories];
+                  const index = oldData.tableData.id;
+                  dataUpdate[index] = newData;
+
+                  setAllCategories([...dataUpdate]);
+
+                });
                 resolve();
               }, 1000);
             }),

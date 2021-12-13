@@ -59,7 +59,7 @@ function AuthorList() {
           [
             {
               field: 'AUTHOR_ID', title: 'ID', type: 'number', width: 10, editable: 'never',
-              render: rowData => <a href={`authors/crud/${rowData.AUTHOR_ID}`}>{rowData.AUTHOR_ID}</a>
+              // render: rowData => <a href={`authors/crud/${rowData.AUTHOR_ID}`}>{rowData.AUTHOR_ID}</a>
             },
             { field: 'FIRST_NAME', title: 'First Name', width: 130 },
             { field: 'LAST_NAME', title: 'Last Name', width: 130 },
@@ -101,6 +101,25 @@ function AuthorList() {
                   setAllAuthors([...dataDelete]);
                 });
 
+                resolve();
+              }, 1000);
+            }),
+
+            onRowUpdate: (newData, oldData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                axios.request({
+                  url: url + `/author/updatebyid/${oldData.AUTHOR_ID}`,
+                  data: newData,
+                  method: 'PUT',
+                }).then((response) => {
+                  const dataUpdate = [...allAuthors];
+                  const index = oldData.tableData.id;
+                  dataUpdate[index] = newData;
+
+                  setAllAuthors([...dataUpdate]);
+
+                });
                 resolve();
               }, 1000);
             }),

@@ -59,7 +59,7 @@ function PublisherList() {
           [
             {
               title: 'ID', field: 'PUBLISHER_ID', type: 'number', width: 10, editable: 'never',
-              render: rowData => <a href={`publishers/crud/${rowData.PUBLISHER_ID}`}>{rowData.PUBLISHER_ID}</a>
+              // render: rowData => <a href={`publishers/crud/${rowData.PUBLISHER_ID}`}>{rowData.PUBLISHER_ID}</a>
             },
             { title: 'Name', field: 'NAME', width: 130 },
             { title: 'Address', field: 'ADDRESS', width: 130 },
@@ -105,6 +105,25 @@ function PublisherList() {
                 resolve();
               }, 1000);
             }),
+
+          onRowUpdate: (newData, oldData) =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              axios.request({
+                url: url + `/publisher/updatebyid/${oldData.PUBLISHER_ID}`,
+                data: newData,
+                method: 'PUT',
+              }).then((response) => {
+                const dataUpdate = [...allPublishers];
+                const index = oldData.tableData.id;
+                dataUpdate[index] = newData;
+
+                setAllPublishers([...dataUpdate]);
+
+              });
+              resolve();
+            }, 1000);
+          }),
         }}
       >
 
