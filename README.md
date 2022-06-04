@@ -1,1 +1,4 @@
-This is a starter template for [Learn Next.js](https://nextjs.org/learn).
+Contributors: 
+Noor Ul Ain Ehtisham
+Ritika Dodani
+Danish Rohail
